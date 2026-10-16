@@ -236,11 +236,20 @@ export function Settlements() {
   if (groupsError) {
     return (
       <div className="settlements-page animate-fade-in">
-        <div className="settlements-header">
+        <div className="settlements-top-nav">
           <Link to="/dashboard" className="back-link">
             <ArrowLeft size={16} /> Back to Dashboard
           </Link>
-          <h1 className="settlements-title">Settlements & Debt Minimization</h1>
+        </div>
+        <div className="settlements-header">
+          <div className="settlements-title-wrap header-meta">
+            <div className="settlements-title-row header-title-row">
+              <h1 className="settlements-title">Settlements & Debt Minimization</h1>
+            </div>
+            <p className="settlements-subtitle">
+              Simplified payment schedules that settle group debts in the fewest possible transactions.
+            </p>
+          </div>
         </div>
         <Alert variant="error">{groupsError}</Alert>
       </div>
@@ -251,14 +260,21 @@ export function Settlements() {
   if (groups.length === 0) {
     return (
       <div className="settlements-page animate-fade-in">
-        <div className="settlements-header">
+        <div className="settlements-top-nav">
           <Link to="/dashboard" className="back-link">
             <ArrowLeft size={16} /> Back to Dashboard
           </Link>
-          <h1 className="settlements-title">Settlements & Debt Minimization</h1>
-          <p className="settlements-subtitle">
-            Simplified payment schedules that settle group debts in the fewest possible transactions.
-          </p>
+        </div>
+
+        <div className="settlements-header">
+          <div className="settlements-title-wrap header-meta">
+            <div className="settlements-title-row header-title-row">
+              <h1 className="settlements-title">Settlements & Debt Minimization</h1>
+            </div>
+            <p className="settlements-subtitle">
+              Simplified payment schedules that settle group debts in the fewest possible transactions.
+            </p>
+          </div>
         </div>
 
         <Card className="settlements-empty-card">
@@ -289,20 +305,24 @@ export function Settlements() {
 
   return (
     <div className="settlements-page animate-fade-in">
-      {/* Top Header & Navigation */}
+      {/* Top Breadcrumb & Back Link */}
+      <div className="settlements-top-nav">
+        <Link to="/dashboard" className="back-link">
+          <ArrowLeft size={16} /> Back to Dashboard
+        </Link>
+      </div>
+
+      {/* Top Header & Group Selector */}
       <div className="settlements-header">
-        <div className="header-meta">
-          <Link to="/dashboard" className="back-link">
-            <ArrowLeft size={16} /> Back to Dashboard
-          </Link>
-          <div className="header-title-row">
+        <div className="settlements-title-wrap header-meta">
+          <div className="settlements-title-row header-title-row">
             <h1 className="settlements-title">Settlements & Debt Minimization</h1>
             <Badge variant="mint" size="sm">
               ENGINE V1.0
             </Badge>
           </div>
           <p className="settlements-subtitle">
-            Deterministic peer-to-peer settlement suggestions calculated from integer paise ledgers.
+            Simplified payment schedules that settle group debts in the fewest possible transactions.
           </p>
         </div>
 

@@ -5,41 +5,50 @@
   margin: 0 auto;
 }
 
-/* Header & Meta */
-.settlements-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.header-meta {
-  max-width: 640px;
+/* Top Navigation & Back Link */
+.settlements-top-nav {
+  margin-bottom: 16px;
 }
 
 .back-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
-  color: var(--charcoal-500);
+  color: var(--charcoal-600);
   text-decoration: none;
-  margin-bottom: 12px;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .back-link:hover {
   color: var(--teal-600);
+  transform: translateX(-2px);
 }
 
+/* Header & Title Section */
+.settlements-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.settlements-title-wrap,
+.header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 720px;
+}
+
+.settlements-title-row,
 .header-title-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 6px;
+  flex-wrap: wrap;
 }
 
 .settlements-title {
@@ -47,12 +56,15 @@
   font-weight: 700;
   color: var(--charcoal-900);
   letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0;
 }
 
 .settlements-subtitle {
   font-size: 14px;
   color: var(--charcoal-600);
   line-height: 1.5;
+  margin: 0;
 }
 
 /* Group Selector Box */
@@ -1119,6 +1131,17 @@
 
 /* Responsive */
 @media (max-width: 960px) {
+  .settlements-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .settlements-title-wrap,
+  .header-meta {
+    max-width: 100%;
+  }
+
   .settlements-metrics-grid {
     grid-template-columns: 1fr;
   }
@@ -1134,5 +1157,23 @@
 
   .group-select-input {
     width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .settlements-page {
+    padding: 16px 16px 48px;
+  }
+
+  .settlements-top-nav {
+    margin-bottom: 12px;
+  }
+
+  .settlements-title {
+    font-size: 22px;
+  }
+
+  .settlements-header {
+    margin-bottom: 20px;
   }
 }
