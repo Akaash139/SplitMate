@@ -12,6 +12,7 @@ import { JoinGroup } from "./pages/groups/JoinGroup";
 import { Settlements } from "./pages/settlements/Settlements";
 import { AllExpenses } from "./pages/expenses/AllExpenses";
 import { Friends } from "./pages/friends/Friends";
+import { Analytics } from "./pages/analytics/Analytics";
 import { PlaceholderPage } from "./pages/placeholder/PlaceholderPage";
 import "./App.css";
 
@@ -39,16 +40,7 @@ function App() {
               <Route path="/expenses" element={<AllExpenses />} />
               <Route path="/activity" element={<Navigate to="/expenses" replace />} />
               <Route path="/settlements" element={<Settlements />} />
-              <Route
-                path="/analytics"
-                element={
-                  <PlaceholderPage
-                    title="Spending & Velocity Analytics"
-                    description="Category breakdowns, monthly spending graphs, and peer payment speeds."
-                    milestone="TASK 5"
-                  />
-                }
-              />
+              <Route path="/analytics" element={<Analytics />} />
               <Route
                 path="/settings"
                 element={
