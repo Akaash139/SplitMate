@@ -1,0 +1,693 @@
+.friends-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Page Header */
+.friends-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.friends-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.friends-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.friends-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--charcoal-900);
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+.friends-subtitle {
+  font-size: 13.5px;
+  color: var(--charcoal-600);
+  margin: 0;
+  max-width: 620px;
+}
+
+.friends-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Summary Metrics Bar */
+.friends-metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.friends-metric-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.friends-metric-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.friends-metric-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.friends-metric-icon-wrap.icon-teal {
+  background-color: var(--teal-50);
+  color: var(--teal-600);
+}
+
+.friends-metric-icon-wrap.icon-emerald {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.friends-metric-icon-wrap.icon-amber {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.friends-metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.friends-metric-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--charcoal-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.friends-metric-value {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--charcoal-900);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Toolbar & Filters */
+.friends-toolbar {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.friends-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--charcoal-200);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  flex: 1;
+  min-width: 240px;
+  max-width: 380px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.friends-search-box:focus-within {
+  border-color: var(--teal-500);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+  background-color: #ffffff;
+}
+
+.friends-search-icon {
+  color: var(--charcoal-400);
+  flex-shrink: 0;
+}
+
+.friends-search-input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13.5px;
+  color: var(--charcoal-900);
+  outline: none;
+}
+
+.friends-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--charcoal-50);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--charcoal-200);
+  flex-wrap: wrap;
+}
+
+.friends-pill {
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  color: var(--charcoal-600);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.friends-pill:hover {
+  color: var(--charcoal-900);
+}
+
+.friends-pill.is-active {
+  background-color: #ffffff;
+  color: var(--teal-700);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Two-Panel Layout */
+.friends-split-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Left Column: Friends List */
+.friends-list-panel {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.friends-panel-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fafafa;
+}
+
+.friends-panel-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+  margin: 0;
+}
+
+.friends-items-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 640px;
+  overflow-y: auto;
+}
+
+.friend-item-card {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  border-left: 3px solid transparent;
+}
+
+.friend-item-card:last-child {
+  border-bottom: none;
+}
+
+.friend-item-card:hover {
+  background-color: var(--charcoal-50);
+}
+
+.friend-item-card.is-selected {
+  background-color: var(--teal-50);
+  border-left-color: var(--teal-600);
+}
+
+.friend-item-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.friend-avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal-500), #0f766e);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
+}
+
+.friend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.friend-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friend-email {
+  font-size: 12px;
+  color: var(--charcoal-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friend-shared-count {
+  font-size: 11.5px;
+  color: var(--charcoal-500);
+}
+
+.friend-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.friend-balance-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.badge-owes-you {
+  background-color: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-you-owe {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.badge-settled {
+  background-color: var(--charcoal-100);
+  color: var(--charcoal-600);
+  border: 1px solid var(--charcoal-200);
+}
+
+.badge-mixed {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* Right Column: Ledger Detail Panel */
+.friend-ledger-panel {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Detail Header */
+.friend-ledger-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background-color: #fafafa;
+}
+
+.friend-ledger-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.friend-profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal-600), #047857);
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 6px rgba(13, 148, 136, 0.25);
+}
+
+.friend-profile-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.friend-profile-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--charcoal-900);
+  margin: 0;
+}
+
+.friend-profile-email {
+  font-size: 13px;
+  color: var(--charcoal-500);
+  margin: 0;
+}
+
+.friend-ledger-status-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.ledger-status-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--charcoal-500);
+  letter-spacing: 0.5px;
+}
+
+.ledger-status-amount {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ledger-status-amount.text-emerald {
+  color: #059669;
+}
+
+.ledger-status-amount.text-amber {
+  color: #d97706;
+}
+
+.ledger-status-amount.text-muted {
+  color: var(--charcoal-600);
+}
+
+/* Actionable Settle Up Card */
+.actionable-settle-card {
+  margin: 16px 20px 0;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #f0fdfa, #f8fafc);
+  border: 1px solid #99f6e4;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.actionable-settle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.actionable-settle-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+}
+
+.actionable-settle-desc {
+  font-size: 12.5px;
+  color: var(--charcoal-600);
+}
+
+/* Mutual Groups Section */
+.friend-shared-groups-strip {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shared-groups-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--charcoal-500);
+  letter-spacing: 0.5px;
+}
+
+.shared-groups-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shared-group-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--charcoal-200);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  color: var(--charcoal-700);
+}
+
+/* Ledger Tabs */
+.friend-tabs-bar {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #fafafa;
+}
+
+.friend-tab-btn {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--charcoal-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.15s ease;
+}
+
+.friend-tab-btn:hover {
+  color: var(--charcoal-900);
+  background-color: var(--charcoal-100);
+}
+
+.friend-tab-btn.is-active {
+  color: var(--teal-700);
+  font-weight: 600;
+  border-bottom-color: var(--teal-600);
+  background-color: #ffffff;
+}
+
+/* Transactions Content */
+.friend-transactions-list {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+/* Settlement Payment Item Card */
+.settlement-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease;
+}
+
+.settlement-history-item:hover {
+  border-color: var(--teal-300);
+}
+
+.settlement-history-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settlement-history-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background-color: #ecfdf5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.settlement-history-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settlement-history-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+}
+
+.settlement-history-sub {
+  font-size: 12px;
+  color: var(--charcoal-500);
+}
+
+.settlement-history-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.settlement-history-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: #059669;
+}
+
+/* Empty States */
+.friends-empty-card {
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.empty-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--teal-50);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-icon-wrap.neutral {
+  background-color: var(--charcoal-100);
+  color: var(--charcoal-500);
+}
+
+.friends-empty-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--charcoal-800);
+  margin: 0;
+}
+
+.friends-empty-desc {
+  font-size: 13.5px;
+  color: var(--charcoal-500);
+  max-width: 440px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .friends-split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .friends-metrics-bar {
+    grid-template-columns: 1fr;
+  }
+}

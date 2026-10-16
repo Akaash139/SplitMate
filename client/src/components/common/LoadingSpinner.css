@@ -1,0 +1,29 @@
+.splitmate-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 16px;
+}
+
+.splitmate-spinner-container.is-fullscreen {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-app);
+  z-index: 9999;
+  min-height: 100vh;
+}
+
+.spinner-brand-mark {
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-message {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--charcoal-600);
+}

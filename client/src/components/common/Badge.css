@@ -1,0 +1,50 @@
+.splitmate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badge-sm {
+  padding: 4px 8px;
+  font-size: 11.5px;
+}
+
+.badge-md {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.badge-neutral {
+  background-color: var(--charcoal-100);
+  color: var(--charcoal-700);
+}
+
+.badge-mint {
+  background-color: var(--teal-50);
+  color: var(--teal-700);
+  border: 1px solid var(--teal-200);
+}
+
+.badge-emerald {
+  background-color: var(--emerald-50);
+  color: var(--emerald-700);
+}
+
+.badge-rose {
+  background-color: var(--rose-50);
+  color: var(--rose-700);
+}
+
+.badge-amber {
+  background-color: var(--amber-50);
+  color: var(--amber-700);
+}
+
+.badge-purple {
+  background-color: var(--purple-50);
+  color: var(--purple-700);
+}

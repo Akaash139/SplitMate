@@ -1,0 +1,288 @@
+.group-details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.group-top-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--charcoal-600);
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--teal-600);
+}
+
+/* Hero Header (Matching Stitch Image 2) */
+.group-hero-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.group-hero-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.group-hero-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--teal-50);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.group-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.group-badge-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.group-hero-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--charcoal-900);
+  letter-spacing: -0.4px;
+}
+
+.group-members-summary-text {
+  font-size: 13px;
+  color: var(--charcoal-600);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inline-icon {
+  color: var(--charcoal-400);
+}
+
+.group-hero-desc {
+  font-size: 13.5px;
+  color: var(--charcoal-500);
+  margin-top: 2px;
+}
+
+.group-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* 2-Column Grid Layout */
+.group-layout-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.group-main-column,
+.group-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Invite Link Card */
+.invite-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.invite-card-desc {
+  font-size: 13px;
+  color: var(--charcoal-600);
+}
+
+.invite-url-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--charcoal-200);
+  border-radius: var(--radius-md);
+  padding: 6px;
+}
+
+.invite-url-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 12.5px;
+  color: var(--charcoal-700);
+  width: 100%;
+  padding-left: 8px;
+  font-family: monospace;
+}
+
+.invite-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.regenerate-link-btn {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: var(--teal-600);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.regenerate-link-btn:hover {
+  text-decoration: underline;
+}
+
+.code-tag {
+  font-size: 11.5px;
+  font-family: monospace;
+  background-color: var(--charcoal-100);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--charcoal-600);
+}
+
+/* Members Roster Card */
+.roster-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.roster-card-content {
+  padding: 16px 20px;
+}
+
+.member-roster-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roster-member-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.roster-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--teal-600);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.roster-member-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.roster-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.roster-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+}
+
+.is-you-tag {
+  font-size: 12px;
+  color: var(--teal-600);
+  font-weight: 500;
+}
+
+.roster-email {
+  font-size: 11.5px;
+  color: var(--charcoal-500);
+}
+
+.feed-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.feed-header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.expenses-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expenses-loading-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.expenses-error-wrap {
+  margin-bottom: 16px;
+}
+
+.action-feedback-wrap {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 960px) {
+  .group-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}

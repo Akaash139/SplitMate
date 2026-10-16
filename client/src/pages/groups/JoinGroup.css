@@ -1,0 +1,133 @@
+.join-group-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background-color: var(--bg-app);
+}
+
+.join-group-card-wrapper {
+  width: 100%;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.join-brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.join-brand-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--teal-700);
+}
+
+.join-action-card {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.join-card-content {
+  padding: 36px 28px;
+}
+
+.join-ready-state,
+.join-error-state,
+.join-success-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.join-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.join-icon-wrap.icon-mint {
+  background-color: var(--teal-50);
+  color: var(--teal-600);
+}
+
+.join-icon-wrap.icon-error {
+  background-color: var(--rose-50);
+  color: var(--rose-600);
+}
+
+.join-icon-wrap.icon-success {
+  background-color: var(--emerald-50);
+  color: var(--emerald-600);
+}
+
+.join-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.join-member-count {
+  font-size: 12.5px;
+  color: var(--charcoal-500);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.join-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--charcoal-900);
+  letter-spacing: -0.4px;
+}
+
+.join-desc {
+  font-size: 13.5px;
+  color: var(--charcoal-600);
+  line-height: 1.5;
+  max-width: 360px;
+}
+
+.organizer-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--charcoal-200);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12.5px;
+}
+
+.organizer-label {
+  color: var(--charcoal-500);
+}
+
+.organizer-name {
+  font-weight: 600;
+  color: var(--charcoal-800);
+}
+
+.join-primary-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.join-footer-note {
+  font-size: 11.5px;
+  color: var(--charcoal-400);
+  max-width: 300px;
+  line-height: 1.4;
+}
