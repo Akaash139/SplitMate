@@ -22,6 +22,17 @@
   gap: 10px;
 }
 
+.join-brand-logo-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background-color: #f0f8ed;
+  border: 1px solid rgba(13, 148, 136, 0.2);
+  object-fit: contain;
+  padding: 2px;
+  flex-shrink: 0;
+}
+
 .join-brand-text {
   font-size: 14px;
   font-weight: 600;

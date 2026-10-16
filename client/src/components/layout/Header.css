@@ -12,6 +12,16 @@
   z-index: 30;
 }
 
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-mobile-brand {
+  display: none;
+}
+
 .header-mobile-toggle {
   display: none;
   background: transparent;
@@ -253,11 +263,41 @@
     display: flex;
   }
 
+  .header-mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-mobile-logo-img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background-color: #f0f8ed;
+    border: 1px solid rgba(13, 148, 136, 0.2);
+    object-fit: contain;
+    padding: 2px;
+    flex-shrink: 0;
+  }
+
+  .header-mobile-brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--teal-700);
+    letter-spacing: -0.3px;
+  }
+
   .header-search-bar {
     display: none;
   }
 
   .profile-info-text {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-mobile-brand-name {
     display: none;
   }
 }

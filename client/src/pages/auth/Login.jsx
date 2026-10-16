@@ -97,11 +97,11 @@ export function Login() {
         {/* Left Side: Brand Value Proposition */}
         <div className="auth-branding-panel">
           <div className="auth-brand-logo">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="24" height="24" rx="6" fill="#0D9488" />
-              <path d="M7 12H17M12 7V17" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
-              <circle cx="12" cy="12" r="3" fill="#14B8A6" />
-            </svg>
+            <img
+              src="/splitmate-logo.png"
+              alt="SplitMate Logo"
+              className="auth-brand-logo-img"
+            />
             <span className="auth-brand-name">SplitMate</span>
           </div>
 

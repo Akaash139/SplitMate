@@ -33,15 +33,26 @@ export function Header({ onMenuClick }) {
 
   return (
     <header className="splitmate-header">
-      {/* Mobile Toggle */}
-      <button
-        type="button"
-        className="header-mobile-toggle"
-        onClick={onMenuClick}
-        aria-label="Open navigation menu"
-      >
-        <Menu size={22} />
-      </button>
+      {/* Mobile Toggle & Brand */}
+      <div className="header-left-group">
+        <button
+          type="button"
+          className="header-mobile-toggle"
+          onClick={onMenuClick}
+          aria-label="Open navigation menu"
+        >
+          <Menu size={22} />
+        </button>
+
+        <div className="header-mobile-brand">
+          <img
+            src="/splitmate-logo.png"
+            alt="SplitMate Logo"
+            className="header-mobile-logo-img"
+          />
+          <span className="header-mobile-brand-name">SplitMate</span>
+        </div>
+      </div>
 
       {/* Global Search Bar */}
       <div className="header-search-bar">

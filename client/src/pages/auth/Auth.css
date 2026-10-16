@@ -46,8 +46,19 @@
 .auth-brand-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   z-index: 2;
+}
+
+.auth-brand-logo-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
+  background-color: #f0f8ed;
+  padding: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
 .auth-brand-name {
