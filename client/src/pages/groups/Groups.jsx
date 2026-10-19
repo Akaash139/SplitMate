@@ -10,7 +10,8 @@ import {
   Folder,
   ArrowRight,
   KeyRound,
-  X
+  X,
+  UserCheck
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
 import { parseInviteCode, validateInviteCode, getInviteErrorMessage } from "../../services/inviteUtils";
@@ -185,6 +186,31 @@ export function Groups() {
             Create Group
           </Button>
         </div>
+      </div>
+
+      {/* Contextual Scope Switcher: Groups & Friends */}
+      <div className="groups-scope-switcher" role="tablist" aria-label="Groups and Friends views">
+        <button
+          type="button"
+          role="tab"
+          aria-selected="true"
+          className="scope-tab is-active"
+          id="scope-tab-groups"
+        >
+          <Users size={15} />
+          <span>Groups</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          className="scope-tab"
+          onClick={() => navigate("/friends")}
+          id="scope-tab-friends"
+        >
+          <UserCheck size={15} />
+          <span>Friends</span>
+        </button>
       </div>
 
       {error && (

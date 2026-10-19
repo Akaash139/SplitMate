@@ -147,6 +147,16 @@ export function Register() {
         {/* Right Side: Register Form */}
         <div className="auth-form-panel">
           <div className="auth-card">
+            {/* Mobile-Only Brand Header */}
+            <div className="auth-mobile-brand">
+              <img
+                src="/splitmate-logo.svg"
+                alt="SplitMate Logo"
+                className="auth-mobile-logo-img"
+              />
+              <span className="auth-mobile-brand-name">SplitMate</span>
+            </div>
+
             <div className="auth-card-header">
               <h2 className="auth-card-title">Create your account</h2>
               <p className="auth-card-subtitle">

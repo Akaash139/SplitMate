@@ -1,9 +1,12 @@
 .google-btn-wrapper {
   width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 44px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .google-btn-wrapper.google-btn-disabled {
@@ -13,12 +16,15 @@
 
 .google-btn-container {
   width: 100%;
+  max-width: 100%;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 }
 
 .google-btn-container iframe {
   margin: 0 auto !important;
+  max-width: 100% !important;
 }
 
 .google-btn-placeholder {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { MobileBottomNav } from "./MobileBottomNav";
 import "./AppLayout.css";
 
 export function AppLayout() {
@@ -18,6 +19,8 @@ export function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      <MobileBottomNav />
     </div>
   );
 }

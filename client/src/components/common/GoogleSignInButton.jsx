@@ -49,8 +49,11 @@ export function GoogleSignInButton({
             cancel_on_tap_outside: true
           });
 
-          // Render Google's official branded button
+          // Render Google's official branded button with responsive width
           containerRef.current.innerHTML = "";
+          const measuredWidth = containerRef.current?.clientWidth || 360;
+          const buttonWidth = Math.min(360, Math.max(200, Math.floor(measuredWidth)));
+
           window.google.accounts.id.renderButton(containerRef.current, {
             type: "standard",
             theme: "outline",
@@ -58,7 +61,7 @@ export function GoogleSignInButton({
             text: text, // "signin_with" | "signup_with" | "continue_with"
             shape: "rectangular",
             logo_alignment: "left",
-            width: "360"
+            width: String(buttonWidth)
           });
         } catch (err) {
           console.error("Failed to initialize Google Sign-In button:", err);

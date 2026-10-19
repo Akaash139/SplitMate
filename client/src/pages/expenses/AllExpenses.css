@@ -45,6 +45,63 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Contextual Scope Switcher (Activity & Analytics) */
+.activity-scope-switcher {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--charcoal-100);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 320px;
+}
+
+.scope-tab {
+  flex: 1;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal-600);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.scope-tab:hover {
+  color: var(--charcoal-900);
+}
+
+.scope-tab.is-active {
+  background-color: var(--bg-surface);
+  color: var(--teal-700);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] .scope-tab.is-active {
+  background-color: var(--charcoal-200);
+  color: var(--teal-400);
+}
+
+.scope-tab:focus-visible {
+  outline: 2px solid var(--teal-500);
+  outline-offset: 1px;
 }
 
 /* Quick Metrics Bar */

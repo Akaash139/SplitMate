@@ -4,6 +4,7 @@ import { Search, Menu, LogOut, User as UserIcon, Sun, Moon } from "lucide-react"
 import { useAuth } from "../../context/useAuth";
 import { useTheme } from "../../context/useTheme";
 import { Button } from "../common/Button";
+import { HeaderInstallButton } from "./HeaderInstallButton";
 import "./Header.css";
 
 export function Header({ onMenuClick }) {
@@ -102,6 +103,9 @@ export function Header({ onMenuClick }) {
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
+
+        {/* Compact Install SplitMate Button */}
+        <HeaderInstallButton />
 
         {/* Quick Settle Up Button */}
         <Button

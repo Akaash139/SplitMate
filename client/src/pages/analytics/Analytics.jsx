@@ -258,8 +258,8 @@ export function Analytics() {
     <div className="analytics-page animate-fade-in">
       {/* Top Breadcrumb & Back Link */}
       <div className="analytics-top-nav">
-        <Link to="/dashboard" className="back-link">
-          <ArrowLeft size={16} /> Back to Dashboard
+        <Link to="/expenses" className="back-link" id="analytics-back-to-activity">
+          <ArrowLeft size={16} /> Back to Activity
         </Link>
       </div>
 
@@ -268,9 +268,6 @@ export function Analytics() {
         <div className="analytics-title-wrap">
           <div className="analytics-title-row">
             <h1 className="analytics-title">Spending & Velocity Analytics</h1>
-            <Badge variant="purple" size="sm" className="engine-badge">
-              ANALYTICS ENGINE
-            </Badge>
           </div>
           <p className="analytics-subtitle">
             Comprehensive category breakdowns, monthly spending graphs, and peer liability insights.
@@ -324,6 +321,30 @@ export function Analytics() {
             Refresh
           </Button>
         </div>
+      </div>
+
+      {/* Contextual Scope Switcher: Expenses & Analytics */}
+      <div className="activity-scope-switcher" role="tablist" aria-label="Activity and Analytics views">
+        <Link
+          to="/expenses"
+          role="tab"
+          aria-selected="false"
+          className="scope-tab"
+          id="scope-tab-expenses"
+        >
+          <Receipt size={15} />
+          <span>Expenses</span>
+        </Link>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="true"
+          className="scope-tab is-active"
+          id="scope-tab-analytics"
+        >
+          <PieChart size={15} />
+          <span>Analytics</span>
+        </button>
       </div>
 
       {/* Global Error Banner */}

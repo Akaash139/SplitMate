@@ -253,6 +253,7 @@
     bottom: 0;
     transform: translateX(-100%);
     box-shadow: var(--shadow-lg);
+    z-index: 50;
   }
 
   .splitmate-sidebar.is-open {
@@ -268,7 +269,7 @@
     position: fixed;
     inset: 0;
     background: rgba(15, 23, 42, 0.4);
-    z-index: 39;
+    z-index: 45;
     backdrop-filter: blur(2px);
   }
 }

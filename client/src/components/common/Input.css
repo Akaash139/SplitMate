@@ -132,3 +132,27 @@
   color: var(--charcoal-500);
   margin-top: 2px;
 }
+
+@media (max-width: 640px) {
+  .input-element {
+    font-size: 16px; /* Prevents unwanted iOS auto-zoom */
+    padding: 11px 14px;
+  }
+
+  .input-element.with-leading-icon {
+    padding-left: 42px;
+  }
+
+  .input-element.with-trailing-icon {
+    padding-right: 44px;
+  }
+
+  .input-password-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 4px;
+  }
+}
