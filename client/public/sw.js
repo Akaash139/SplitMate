@@ -8,7 +8,7 @@
  * 3. Static assets use stale-while-revalidate for fast loading and offline reliability.
  */
 
-const CACHE_NAME = 'splitmate-static-v1';
+const CACHE_NAME = 'splitmate-static-v2';
 
 const STATIC_SHELL_ASSETS = [
   '/',
