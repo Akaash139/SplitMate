@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { User, Mail, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
 import { Input } from "../../components/common/Input";
@@ -13,6 +13,9 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export function Register() {
   const { register, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || location.state?.from || "/dashboard";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -76,7 +79,7 @@ export function Register() {
     setIsSubmitting(true);
     try {
       await register(formData.name.trim(), formData.email.trim(), formData.password);
-      navigate("/dashboard", { replace: true });
+      navigate(from, { replace: true });
     } catch (err) {
       setServerError(err.message || "Failed to create account. Please try again.");
     } finally {
@@ -89,7 +92,7 @@ export function Register() {
     setIsSubmitting(true);
     try {
       await loginWithGoogle(credential);
-      navigate("/dashboard", { replace: true });
+      navigate(from, { replace: true });
     } catch (err) {
       setServerError(err.message || "Failed to sign up with Google.");
     } finally {
@@ -247,7 +250,7 @@ export function Register() {
             <div className="auth-card-footer">
               <p className="auth-switch-text">
                 Already have an account?{" "}
-                <Link to="/login" className="auth-switch-link">
+                <Link to="/login" state={location.state} className="auth-switch-link">
                   Sign in
                 </Link>
               </p>

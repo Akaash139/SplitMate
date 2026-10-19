@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Users, ArrowRight, CheckCircle2, AlertCircle, Home, Plane, Heart, Folder } from "lucide-react";
-import { api, ApiError } from "../../services/api";
+import { api, tokenStorage } from "../../services/api";
+import { parseInviteCode, getInviteErrorMessage } from "../../services/inviteUtils";
 import { useAuth } from "../../context/useAuth";
 import { Card, CardContent } from "../../components/common/Card";
 import { Button } from "../../components/common/Button";
@@ -17,7 +18,8 @@ const CATEGORY_ICONS = {
 };
 
 export function JoinGroup() {
-  const { inviteCode } = useParams();
+  const rawParams = useParams();
+  const inviteCode = parseInviteCode(rawParams.inviteCode);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
@@ -35,9 +37,23 @@ export function JoinGroup() {
         const res = await api.groups.getInvitePreview(inviteCode);
         if (res.success && res.group) {
           setPreview(res.group);
+
+          // Proactively verify if current user is already an active member
+          if (tokenStorage.get()) {
+            try {
+              const myGroups = await api.groups.getAll();
+              if (myGroups.success && myGroups.groups) {
+                if (myGroups.groups.some((g) => g.id === res.group.id)) {
+                  setAlreadyMember(true);
+                }
+              }
+            } catch {
+              // Ignore background membership check failure; fallback to handleJoin check
+            }
+          }
         }
       } catch (err) {
-        setError(err instanceof ApiError ? err.message : "Invalid or expired invitation link");
+        setError(getInviteErrorMessage(err));
       } finally {
         setLoading(false);
       }
@@ -60,7 +76,7 @@ export function JoinGroup() {
       if (err.message?.includes("already a member")) {
         setAlreadyMember(true);
       } else {
-        setError(err.message || "Failed to join group");
+        setError(getInviteErrorMessage(err));
       }
     } finally {
       setIsJoining(false);
@@ -156,11 +172,23 @@ export function JoinGroup() {
                     Accept & Join Group
                   </Button>
                 ) : (
-                  <Link to="/login" state={{ from: { pathname: `/join/${inviteCode}` } }}>
-                    <Button variant="primary" size="lg" className="join-primary-btn">
-                      Log In to Join Group
-                    </Button>
-                  </Link>
+                  <div className="join-auth-prompt">
+                    <Link to="/login" state={{ from: { pathname: `/join/${inviteCode}` } }}>
+                      <Button variant="primary" size="lg" className="join-primary-btn">
+                        Log In to Join Group
+                      </Button>
+                    </Link>
+                    <p className="join-register-prompt">
+                      Don't have an account?{" "}
+                      <Link
+                        to="/register"
+                        state={{ from: { pathname: `/join/${inviteCode}` } }}
+                        className="join-register-link"
+                      >
+                        Create an account
+                      </Link>
+                    </p>
+                  </div>
                 )}
 
                 <p className="join-footer-note">

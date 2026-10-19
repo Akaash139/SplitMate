@@ -13,6 +13,7 @@ import {
   X
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
+import { parseInviteCode, validateInviteCode, getInviteErrorMessage } from "../../services/inviteUtils";
 import { Card, CardContent } from "../../components/common/Card";
 import { Button } from "../../components/common/Button";
 import { Input } from "../../components/common/Input";
@@ -123,9 +124,9 @@ export function Groups() {
     e.preventDefault();
     setJoinApiError("");
 
-    const code = inviteCodeInput.trim();
-    if (!code) {
-      setJoinApiError("Please enter an invitation code");
+    const code = parseInviteCode(inviteCodeInput);
+    if (!validateInviteCode(code)) {
+      setJoinApiError("Please enter a valid invitation code or link");
       return;
     }
 
@@ -138,7 +139,7 @@ export function Groups() {
         navigate(`/groups/${res.group.id}`);
       }
     } catch (err) {
-      setJoinApiError(err.message || "Invalid or expired invitation code");
+      setJoinApiError(getInviteErrorMessage(err));
     } finally {
       setIsJoining(false);
     }

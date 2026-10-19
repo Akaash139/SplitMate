@@ -24,7 +24,7 @@ export function Login() {
   const [serverError, setServerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from?.pathname || location.state?.from || "/dashboard";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -206,7 +206,7 @@ export function Login() {
             <div className="auth-card-footer">
               <p className="auth-switch-text">
                 Don't have an account yet?{" "}
-                <Link to="/register" className="auth-switch-link">
+                <Link to="/register" state={location.state} className="auth-switch-link">
                   Create one now
                 </Link>
               </p>

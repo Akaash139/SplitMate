@@ -16,6 +16,7 @@ import {
   X
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
+import { generateInviteUrl } from "../../services/inviteUtils";
 import { useAuth } from "../../context/useAuth";
 import { Card, CardHeader, CardTitle, CardContent } from "../../components/common/Card";
 import { Button } from "../../components/common/Button";
@@ -154,7 +155,7 @@ export function GroupDetails() {
 
   // Invite link generation
   const inviteLink = group?.inviteCode
-    ? `${window.location.origin}/join/${group.inviteCode}`
+    ? generateInviteUrl(window.location.origin, group.inviteCode)
     : "";
 
   const handleCopyInvite = async () => {
