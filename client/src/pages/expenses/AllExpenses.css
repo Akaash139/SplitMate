@@ -55,7 +55,7 @@
 }
 
 .expenses-metric-card {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 14px 18px;
@@ -122,7 +122,7 @@
 
 /* Filter Toolbar */
 .all-expenses-toolbar {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 14px 16px;
@@ -168,7 +168,7 @@
 .expenses-search-box:focus-within {
   border-color: var(--teal-500);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
 }
 
 .expenses-search-icon {
@@ -234,7 +234,7 @@
 }
 
 .filter-pill.is-active {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   color: var(--teal-700);
   font-weight: 600;
   box-shadow: var(--shadow-sm);
@@ -277,7 +277,7 @@
 .expenses-dropdown-select:focus {
   border-color: var(--teal-500);
   box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.15);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
 }
 
 /* Active filter count & reset */
@@ -328,7 +328,7 @@
 
 /* Expenses List */
 .all-expenses-list-card {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -430,7 +430,7 @@
   padding: 10px 14px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: left;

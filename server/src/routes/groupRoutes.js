@@ -18,6 +18,10 @@ const {
   filterExpensesInMemory,
   calculateAnalytics
 } = require("../utils/analyticsEngine");
+const {
+  generateExpensesCsv,
+  generateSettlementsCsv
+} = require("../utils/csvEngine");
 
 const router = express.Router();
 
@@ -483,6 +487,199 @@ async function handleUserOverviewCategoryAnalytics(req, res, next) {
 
 router.get("/analytics", handleUserOverviewAnalytics);
 router.get("/analytics/categories", handleUserOverviewCategoryAnalytics);
+
+/**
+ * @route   GET /api/v1/groups/expenses/export
+ * @desc    Export authorized expenses across user groups as an RFC 4180 CSV document
+ * @access  Private (Authenticated User)
+ */
+async function handleExportExpensesAllGroups(req, res, next) {
+  try {
+    const { groupId, category, payer, search, startDate, endDate } = req.query;
+
+    const userGroups = await Group.find({ "members.user": req.user._id });
+    const userGroupMap = new Map(userGroups.map((g) => [g._id.toString(), g]));
+
+    let targetGroupIds = [];
+    let groupName = "All Groups";
+
+    if (groupId && groupId !== "all") {
+      if (!mongoose.Types.ObjectId.isValid(groupId)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid group identifier"
+        });
+      }
+      if (!userGroupMap.has(groupId.toString())) {
+        return res.status(403).json({
+          success: false,
+          error: "Access denied. You are not a member of this group"
+        });
+      }
+      targetGroupIds = [new mongoose.Types.ObjectId(groupId)];
+      groupName = userGroupMap.get(groupId.toString()).name;
+    } else {
+      targetGroupIds = userGroups.map((g) => g._id);
+    }
+
+    if (targetGroupIds.length === 0) {
+      const csvContent = generateExpensesCsv([], { groupName: "No Groups" });
+      const dateStr = new Date().toISOString().split("T")[0];
+      res.setHeader("Content-Type", "text/csv; charset=utf-8");
+      res.setHeader("Content-Disposition", `attachment; filename="splitmate-expenses-${dateStr}.csv"`);
+      return res.status(200).send(csvContent);
+    }
+
+    const filter = { group: { $in: targetGroupIds } };
+
+    if (category && category !== "all") {
+      filter.category = category;
+    }
+
+    if (payer && payer !== "all") {
+      if (payer === "mine") {
+        filter.paidBy = req.user._id;
+      } else if (mongoose.Types.ObjectId.isValid(payer)) {
+        filter.paidBy = new mongoose.Types.ObjectId(payer);
+      }
+    }
+
+    if (startDate || endDate) {
+      filter.createdAt = {};
+      if (startDate) {
+        const s = new Date(startDate);
+        if (!isNaN(s.getTime())) filter.createdAt.$gte = s;
+      }
+      if (endDate) {
+        const e = new Date(endDate);
+        if (!isNaN(e.getTime())) {
+          e.setHours(23, 59, 59, 999);
+          filter.createdAt.$lte = e;
+        }
+      }
+      if (Object.keys(filter.createdAt).length === 0) {
+        delete filter.createdAt;
+      }
+    }
+
+    if (search && typeof search === "string" && search.trim()) {
+      filter.description = { $regex: search.trim(), $options: "i" };
+    }
+
+    const expenses = await Expense.find(filter)
+      .sort({ createdAt: -1 })
+      .populate("paidBy", "name email avatar")
+      .populate("group", "name category");
+
+    const csvContent = generateExpensesCsv(expenses, {
+      groupName,
+      currency: "INR"
+    });
+
+    const dateStr = new Date().toISOString().split("T")[0];
+    const filename = `splitmate-expenses-${dateStr}.csv`;
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    return res.status(200).send(csvContent);
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @route   GET /api/v1/groups/settlements/export
+ * @desc    Export authorized settlements across user groups as an RFC 4180 CSV document
+ * @access  Private (Authenticated User)
+ */
+async function handleExportSettlementsAllGroups(req, res, next) {
+  try {
+    const { groupId, status, startDate, endDate } = req.query;
+
+    const userGroups = await Group.find({ "members.user": req.user._id });
+    const userGroupMap = new Map(userGroups.map((g) => [g._id.toString(), g]));
+
+    let targetGroupIds = [];
+    let groupName = "All Groups";
+
+    if (groupId && groupId !== "all") {
+      if (!mongoose.Types.ObjectId.isValid(groupId)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid group identifier"
+        });
+      }
+      if (!userGroupMap.has(groupId.toString())) {
+        return res.status(403).json({
+          success: false,
+          error: "Access denied. You are not a member of this group"
+        });
+      }
+      targetGroupIds = [new mongoose.Types.ObjectId(groupId)];
+      groupName = userGroupMap.get(groupId.toString()).name;
+    } else {
+      targetGroupIds = userGroups.map((g) => g._id);
+    }
+
+    if (targetGroupIds.length === 0) {
+      const csvContent = generateSettlementsCsv([], { groupName: "No Groups" });
+      const dateStr = new Date().toISOString().split("T")[0];
+      res.setHeader("Content-Type", "text/csv; charset=utf-8");
+      res.setHeader("Content-Disposition", `attachment; filename="splitmate-settlements-${dateStr}.csv"`);
+      return res.status(200).send(csvContent);
+    }
+
+    const filter = { group: { $in: targetGroupIds } };
+
+    if (status && status !== "all") {
+      filter.status = status;
+    }
+
+    if (startDate || endDate) {
+      filter.settledAt = {};
+      if (startDate) {
+        const s = new Date(startDate);
+        if (!isNaN(s.getTime())) filter.settledAt.$gte = s;
+      }
+      if (endDate) {
+        const e = new Date(endDate);
+        if (!isNaN(e.getTime())) {
+          e.setHours(23, 59, 59, 999);
+          filter.settledAt.$lte = e;
+        }
+      }
+      if (Object.keys(filter.settledAt).length === 0) {
+        delete filter.settledAt;
+      }
+    }
+
+    const settlements = await Settlement.find(filter)
+      .sort({ settledAt: -1, createdAt: -1 })
+      .populate("payer", "name email avatar")
+      .populate("receiver", "name email avatar")
+      .populate("recordedBy", "name email avatar")
+      .populate("group", "name category");
+
+    const csvContent = generateSettlementsCsv(settlements, {
+      groupName,
+      currency: "INR"
+    });
+
+    const dateStr = new Date().toISOString().split("T")[0];
+    const filename = `splitmate-settlements-${dateStr}.csv`;
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    return res.status(200).send(csvContent);
+  } catch (error) {
+    next(error);
+  }
+}
+
+router.get("/expenses/export", handleExportExpensesAllGroups);
+router.get("/expenses/export/csv", handleExportExpensesAllGroups);
+router.get("/settlements/export", handleExportSettlementsAllGroups);
+router.get("/settlements/export/csv", handleExportSettlementsAllGroups);
 
 /**
  * @route   GET /api/v1/groups/:id
@@ -1077,6 +1274,65 @@ async function handleCreateSettlement(req, res, next) {
 
 router.get("/:groupId/settlements", requireGroupMember, handleListSettlements);
 router.post("/:groupId/settlements", requireGroupMember, handleCreateSettlement);
+
+/**
+ * @route   GET /api/v1/groups/:groupId/settlements/export
+ * @desc    Export settlement payments for a specific group as an RFC 4180 CSV document
+ * @access  Private (Group Members only)
+ */
+async function handleExportSettlementsGroup(req, res, next) {
+  try {
+    const { status, startDate, endDate } = req.query;
+
+    const filter = { group: req.group._id };
+
+    if (status && status !== "all") {
+      filter.status = status;
+    }
+
+    if (startDate || endDate) {
+      filter.settledAt = {};
+      if (startDate) {
+        const s = new Date(startDate);
+        if (!isNaN(s.getTime())) filter.settledAt.$gte = s;
+      }
+      if (endDate) {
+        const e = new Date(endDate);
+        if (!isNaN(e.getTime())) {
+          e.setHours(23, 59, 59, 999);
+          filter.settledAt.$lte = e;
+        }
+      }
+      if (Object.keys(filter.settledAt).length === 0) {
+        delete filter.settledAt;
+      }
+    }
+
+    const settlements = await Settlement.find(filter)
+      .sort({ settledAt: -1, createdAt: -1 })
+      .populate("payer", "name email avatar")
+      .populate("receiver", "name email avatar")
+      .populate("recordedBy", "name email avatar")
+      .populate("group", "name category");
+
+    const csvContent = generateSettlementsCsv(settlements, {
+      groupName: req.group.name,
+      currency: "INR"
+    });
+
+    const dateStr = new Date().toISOString().split("T")[0];
+    const filename = `splitmate-settlements-${dateStr}.csv`;
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    return res.status(200).send(csvContent);
+  } catch (error) {
+    next(error);
+  }
+}
+
+router.get("/:groupId/settlements/export", requireGroupMember, handleExportSettlementsGroup);
+router.get("/:groupId/settlements/export/csv", requireGroupMember, handleExportSettlementsGroup);
 
 /**
  * @route   PUT /api/v1/groups/:id

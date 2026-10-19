@@ -25,7 +25,7 @@
 
 /* Hero Header (Matching Stitch Image 2) */
 .group-hero-card {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 24px;

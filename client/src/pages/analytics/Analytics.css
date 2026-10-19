@@ -511,7 +511,7 @@
 
 .donut-legend-item:hover,
 .donut-legend-item.is-active {
-  background: #ffffff;
+  background: var(--bg-surface);
   border-color: var(--purple-300, #c4b5fd);
   box-shadow: var(--shadow-sm);
   transform: translateX(2px);

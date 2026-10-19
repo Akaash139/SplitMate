@@ -26,7 +26,7 @@
   width: 100%;
   border-radius: var(--radius-md);
   border: 1px solid var(--charcoal-200);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   transition: all 0.15s ease-in-out;
 }
 

@@ -12,7 +12,7 @@
   grid-template-columns: 1fr 1fr;
   max-width: 980px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
@@ -51,13 +51,14 @@
 }
 
 .auth-brand-logo-img {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 10px;
   object-fit: contain;
   background-color: #f0f8ed;
-  padding: 2px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: block;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
 }
 
@@ -140,7 +141,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
 }
 
 .auth-card {

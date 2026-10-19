@@ -9,6 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>SplitMate — Smart Expense Sharing & Debt Simplification</title>
+    <!-- Prevent dark mode flash of unstyled content (FOUC) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('splitmate_theme');
+          var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
     <!-- Google Identity Services client library -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>

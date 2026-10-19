@@ -67,12 +67,24 @@
   margin: 0;
 }
 
+/* Header Actions Container */
+.settlements-header-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 /* Group Selector Box */
 .settlements-group-selector-box {
   display: flex;
   flex-direction: column;
   gap: 6px;
   align-items: flex-end;
+}
+
+.settlements-export-btn {
+  white-space: nowrap;
 }
 
 .selector-label {
@@ -1150,9 +1162,21 @@
     grid-template-columns: 1fr;
   }
 
+  .settlements-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 12px;
+  }
+
   .settlements-group-selector-box {
     align-items: stretch;
     width: 100%;
+  }
+
+  .settlements-export-btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .group-select-input {

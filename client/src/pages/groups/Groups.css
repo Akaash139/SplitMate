@@ -39,7 +39,7 @@
   gap: 16px;
   flex-wrap: wrap;
   padding: 12px 16px;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
 }
@@ -247,7 +247,7 @@
 }
 
 .modal-container {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);
@@ -321,7 +321,7 @@
   padding: 10px 8px;
   border-radius: var(--radius-md);
   border: 1px solid var(--charcoal-200);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   color: var(--charcoal-700);
   font-size: 12px;
   font-weight: 500;

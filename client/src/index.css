@@ -70,6 +70,46 @@
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+/* SplitMate Dark Mode Theme Tokens */
+[data-theme="dark"] {
+  /* Inverted Charcoal & Slate Neutrals */
+  --charcoal-50: #0f172a;
+  --charcoal-100: #1e293b;
+  --charcoal-200: #334155;
+  --charcoal-300: #475569;
+  --charcoal-400: #94a3b8;
+  --charcoal-500: #cbd5e1;
+  --charcoal-600: #e2e8f0;
+  --charcoal-700: #f1f5f9;
+  --charcoal-800: #f8fafc;
+  --charcoal-900: #ffffff;
+
+  /* Surfaces & Structural Layout */
+  --bg-app: #0b0f19;
+  --bg-surface: #111827;
+  --bg-sidebar: #0b0f19;
+  --border-color: #1f293d;
+  --border-subtle: #172033;
+
+  /* Elevated Dark Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+
+  /* Subtle Tinted Accents for High Contrast in Dark Mode */
+  --emerald-50: rgba(16, 185, 129, 0.14);
+  --emerald-100: rgba(16, 185, 129, 0.22);
+  --rose-50: rgba(244, 63, 94, 0.14);
+  --rose-100: rgba(244, 63, 94, 0.22);
+  --amber-50: rgba(245, 158, 11, 0.14);
+  --amber-100: rgba(245, 158, 11, 0.22);
+  --purple-50: rgba(139, 92, 246, 0.14);
+  --purple-100: rgba(139, 92, 246, 0.22);
+  --teal-50: rgba(20, 184, 166, 0.14);
+  --teal-100: rgba(20, 184, 166, 0.22);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -167,7 +207,7 @@ button, input, select, textarea {
 }
 
 .modal-container {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-lg);

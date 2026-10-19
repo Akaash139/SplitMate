@@ -8,8 +8,6 @@ import {
   ArrowDownRight,
   Wallet,
   Receipt,
-  Calendar,
-  FileText,
   ArrowRight,
   Home,
   Plane,
@@ -265,9 +263,6 @@ export function Dashboard() {
       <div className="dashboard-welcome-header">
         <div className="welcome-text-meta">
           <div className="welcome-badge-row">
-            <Badge variant="mint" size="sm">
-              FINANCIAL HUB
-            </Badge>
             <span className="welcome-date">{today}</span>
           </div>
           <h1 className="welcome-title">
@@ -276,25 +271,6 @@ export function Dashboard() {
           <p className="welcome-subtitle">
             You&apos;re connected to SplitMate. Manage your group expenses, calculate who owes whom, and settle debts with fewer payments.
           </p>
-        </div>
-
-        <div className="welcome-actions-row">
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={Calendar}
-            onClick={() => navigate("/expenses")}
-          >
-            Current Cycle
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={FileText}
-            onClick={() => navigate("/analytics")}
-          >
-            Monthly CSV
-          </Button>
         </div>
       </div>
 

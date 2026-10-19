@@ -4,21 +4,10 @@ import { Button } from "../common/Button";
 import { Input } from "../common/Input";
 import { Alert } from "../common/Alert";
 import { api, ApiError } from "../../services/api";
+import { EXPENSE_CATEGORIES } from "../../constants/categories";
 import "./ExpenseModal.css";
 
-const CATEGORIES = [
-  "Food & Drink",
-  "Groceries",
-  "Transportation",
-  "Housing",
-  "Utilities",
-  "Entertainment",
-  "Shopping",
-  "Travel",
-  "Medical",
-  "General",
-  "Other"
-];
+const CATEGORIES = EXPENSE_CATEGORIES;
 
 export function ExpenseModal({
   isOpen,

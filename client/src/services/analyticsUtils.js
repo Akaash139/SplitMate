@@ -12,22 +12,12 @@ import {
   Folder
 } from "lucide-react";
 
-/**
- * SplitMate Canonical Expense Categories (11 supported categories)
- */
-export const CANONICAL_CATEGORIES = [
-  "Food & Drink",
-  "Groceries",
-  "Transportation",
-  "Housing",
-  "Utilities",
-  "Entertainment",
-  "Shopping",
-  "Travel",
-  "Medical",
-  "General",
-  "Other"
-];
+import {
+  EXPENSE_CATEGORIES,
+  CANONICAL_CATEGORIES
+} from "../constants/categories.js";
+
+export { EXPENSE_CATEGORIES, CANONICAL_CATEGORIES };
 
 /**
  * Harmonious, high-contrast, accessible color palette tailored to SplitMate's design system

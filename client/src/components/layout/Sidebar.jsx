@@ -1,7 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Zap,
-  HelpCircle,
   LogOut,
   X
 } from "lucide-react";
@@ -33,7 +31,7 @@ export function Sidebar({ isOpen, onClose }) {
           <div className="sidebar-brand">
             <div className="brand-logo-mark">
               <img
-                src="/splitmate-logo.png"
+                src="/splitmate-logo.svg"
                 alt="SplitMate Logo"
                 className="sidebar-brand-logo-img"
               />
@@ -65,7 +63,7 @@ export function Sidebar({ isOpen, onClose }) {
           <div className="group-avatar-badge">{userInitials}</div>
           <div className="group-text-wrap">
             <span className="group-main-title">All Personal Groups</span>
-            <span className="group-sub-title">Shared Household</span>
+            <span className="group-sub-title">Manage Groups</span>
           </div>
         </div>
 
@@ -97,30 +95,6 @@ export function Sidebar({ isOpen, onClose }) {
 
         {/* Sidebar Footer */}
         <div className="sidebar-footer">
-          <button
-            type="button"
-            className="quick-settle-btn"
-            onClick={() => {
-              if (onClose) onClose();
-              navigate("/settlements");
-            }}
-          >
-            <Zap size={16} className="quick-settle-icon" />
-            <span>Quick Settle</span>
-          </button>
-
-          <button
-            type="button"
-            className="sidebar-footer-link"
-            onClick={() => {
-              if (onClose) onClose();
-              navigate("/settings");
-            }}
-          >
-            <HelpCircle size={16} />
-            <span>Help & Documentation</span>
-          </button>
-
           <button
             type="button"
             className="sidebar-logout-btn"

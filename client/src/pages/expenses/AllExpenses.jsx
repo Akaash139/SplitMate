@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Receipt,
   Plus,
@@ -11,7 +11,8 @@ import {
   Tag,
   Wallet,
   TrendingUp,
-  RotateCcw
+  RotateCcw,
+  FileDown
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
 import { useAuth } from "../../context/useAuth";
@@ -21,6 +22,11 @@ import {
   getPartialFailures,
   filterAllExpenses
 } from "../../services/allExpensesUtils";
+import {
+  downloadCsvBlob,
+  getStandardExportFilename
+} from "../../services/csvUtils";
+import { EXPENSE_CATEGORIES } from "../../constants/categories";
 import { ExpenseItem } from "../../components/expenses/ExpenseItem";
 import { ExpenseModal } from "../../components/expenses/ExpenseModal";
 import { Button } from "../../components/common/Button";
@@ -29,22 +35,11 @@ import { Alert } from "../../components/common/Alert";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 import "./AllExpenses.css";
 
-const CATEGORIES = [
-  "Food & Drink",
-  "Groceries",
-  "Transportation",
-  "Housing",
-  "Utilities",
-  "Entertainment",
-  "Shopping",
-  "Travel",
-  "Medical",
-  "General",
-  "Other"
-];
+const CATEGORIES = EXPENSE_CATEGORIES;
 
 export function AllExpenses() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const currentUserId = user?.id || user?._id;
 
@@ -57,12 +52,22 @@ export function AllExpenses() {
   const [partialFailures, setPartialFailures] = useState([]);
   const [actionFeedback, setActionFeedback] = useState("");
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [isExporting, setIsExporting] = useState(false);
 
   // Filter state
   const [payerFilter, setPayerFilter] = useState("all"); // 'all' | 'mine'
   const [selectedGroupId, setSelectedGroupId] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
+
+  // React render-time state adjustment pattern for URL search query synchronization
+  const urlSearch = searchParams.get("search");
+  const [searchQuery, setSearchQuery] = useState(urlSearch || "");
+  const [prevUrlSearch, setPrevUrlSearch] = useState(urlSearch);
+
+  if (urlSearch !== prevUrlSearch) {
+    setPrevUrlSearch(urlSearch);
+    setSearchQuery(urlSearch || "");
+  }
 
   // Modals state
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
@@ -287,16 +292,48 @@ export function AllExpenses() {
     handleRefresh();
   };
 
+  const handleDownloadExpensesCsv = async () => {
+    if (isExporting) return;
+    setIsExporting(true);
+    setError(null);
+
+    try {
+      const params = {};
+      if (selectedCategory && selectedCategory !== "all") {
+        params.category = selectedCategory;
+      }
+      if (payerFilter && payerFilter !== "all") {
+        params.payer = payerFilter;
+      }
+      if (searchQuery && searchQuery.trim()) {
+        params.search = searchQuery.trim();
+      }
+
+      const gid = selectedGroupId === "all" ? null : selectedGroupId;
+      const { blob, filename } = await api.expenses.exportCsv(gid, params);
+
+      const targetFilename = filename || getStandardExportFilename("expenses");
+      downloadCsvBlob(blob, targetFilename);
+
+      const scopeText = gid
+        ? groups.find((g) => toIdString(g.id || g._id) === toIdString(gid))?.name || "Selected Group"
+        : "All Groups";
+      setActionFeedback(`Expenses CSV downloaded successfully (${scopeText}).`);
+      setTimeout(() => setActionFeedback(""), 4000);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Failed to download expenses CSV.");
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return (
     <div className="all-expenses-page animate-fade-in">
       {/* Page Header */}
       <div className="all-expenses-header">
         <div className="all-expenses-title-wrap">
           <div className="all-expenses-badge-row">
-            <Badge variant="mint" size="sm">
-              ACTIVITY LEDGER
-            </Badge>
-            <span style={{ fontSize: "12px", color: "var(--charcoal-500)" }}>
+            <span style={{ fontSize: "12px", color: "var(--charcoal-500)", fontWeight: 500 }}>
               {groups.length} {groups.length === 1 ? "Group" : "Groups"} Connected
             </span>
           </div>
@@ -307,6 +344,18 @@ export function AllExpenses() {
         </div>
 
         <div className="all-expenses-header-actions">
+          <Button
+            variant="outline"
+            size="md"
+            icon={FileDown}
+            isLoading={isExporting}
+            disabled={isExporting}
+            onClick={handleDownloadExpensesCsv}
+            title="Download Expenses CSV"
+          >
+            Download Expenses CSV
+          </Button>
+
           <Button
             variant="outline"
             size="md"

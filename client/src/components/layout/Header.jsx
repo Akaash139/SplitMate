@@ -1,15 +1,28 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Bell, Plus, Menu, LogOut, User as UserIcon } from "lucide-react";
+import { Search, Menu, LogOut, User as UserIcon, Sun, Moon } from "lucide-react";
 import { useAuth } from "../../context/useAuth";
+import { useTheme } from "../../context/useTheme";
 import { Button } from "../common/Button";
 import "./Header.css";
 
 export function Header({ onMenuClick }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [globalSearch, setGlobalSearch] = useState("");
   const dropdownRef = useRef(null);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const query = globalSearch.trim();
+    if (query) {
+      navigate(`/expenses?search=${encodeURIComponent(query)}`);
+    } else {
+      navigate("/expenses");
+    }
+  };
 
   // Close profile dropdown on outside click
   useEffect(() => {
@@ -46,7 +59,7 @@ export function Header({ onMenuClick }) {
 
         <div className="header-mobile-brand">
           <img
-            src="/splitmate-logo.png"
+            src="/splitmate-logo.svg"
             alt="SplitMate Logo"
             className="header-mobile-logo-img"
           />
@@ -55,33 +68,39 @@ export function Header({ onMenuClick }) {
       </div>
 
       {/* Global Search Bar */}
-      <div className="header-search-bar">
-        <Search size={16} className="search-icon" />
+      <form
+        role="search"
+        className="header-search-bar"
+        onSubmit={handleSearchSubmit}
+      >
+        <button
+          type="submit"
+          className="search-submit-btn"
+          aria-label="Search expenses"
+        >
+          <Search size={16} className="search-icon" />
+        </button>
         <input
-          type="text"
-          placeholder="Search expenses, groups, friends..."
+          type="search"
+          placeholder="Search expenses, groups, notes..."
           className="search-input"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              navigate("/groups");
-            }
-          }}
+          value={globalSearch}
+          onChange={(e) => setGlobalSearch(e.target.value)}
+          aria-label="Search expenses"
         />
-        <kbd className="search-shortcut">⌘K</kbd>
-      </div>
+      </form>
 
       {/* Header Actions */}
       <div className="header-actions">
-        {/* Notification Bell */}
+        {/* Dark Mode Theme Toggle */}
         <button
           type="button"
-          className="header-icon-btn"
-          aria-label="View notifications"
-          title="Notifications"
-          onClick={() => navigate("/expenses")}
+          className="header-icon-btn theme-toggle-btn"
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          onClick={toggleTheme}
         >
-          <Bell size={18} />
-          <span className="notification-indicator" />
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
         {/* Quick Settle Up Button */}
@@ -94,17 +113,6 @@ export function Header({ onMenuClick }) {
           onClick={() => navigate("/settlements")}
         >
           Settle Up
-        </Button>
-
-        {/* Primary Add Expense Button */}
-        <Button
-          variant="primary"
-          size="sm"
-          icon={Plus}
-          className="header-add-expense-btn"
-          onClick={() => navigate("/groups")}
-        >
-          Add Expense
         </Button>
 
         {/* User Profile Pill */}
@@ -125,7 +133,7 @@ export function Header({ onMenuClick }) {
             </div>
             <div className="profile-info-text">
               <span className="profile-name">{user?.name || "SplitMate User"}</span>
-              <span className="profile-status">Online</span>
+              <span className="profile-status">{user?.email || "Signed in"}</span>
             </div>
           </button>
 

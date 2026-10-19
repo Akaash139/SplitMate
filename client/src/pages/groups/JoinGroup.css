@@ -23,20 +23,29 @@
 }
 
 .join-brand-logo-img {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
   background-color: #f0f8ed;
   border: 1px solid rgba(13, 148, 136, 0.2);
   object-fit: contain;
-  padding: 2px;
+  display: block;
   flex-shrink: 0;
+}
+
+[data-theme="dark"] .join-brand-logo-img {
+  background-color: rgba(20, 184, 166, 0.15);
+  border-color: rgba(20, 184, 166, 0.3);
 }
 
 .join-brand-text {
   font-size: 14px;
   font-weight: 600;
   color: var(--teal-700);
+}
+
+[data-theme="dark"] .join-brand-text {
+  color: var(--teal-400);
 }
 
 .join-action-card {

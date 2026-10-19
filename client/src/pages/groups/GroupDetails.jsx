@@ -309,7 +309,7 @@ export function GroupDetails() {
             icon={Plus}
             onClick={handleOpenAddExpense}
           >
-            Add Group Expense
+            Add Expense
           </Button>
         </div>
       </div>
@@ -326,14 +326,6 @@ export function GroupDetails() {
                   {expenses.length} Logged
                 </Badge>
               </div>
-              <Button
-                variant="primary"
-                size="sm"
-                icon={Plus}
-                onClick={handleOpenAddExpense}
-              >
-                Add Expense
-              </Button>
             </CardHeader>
             <CardContent>
               {actionFeedback && (

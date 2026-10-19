@@ -108,7 +108,7 @@ export function Register() {
         <div className="auth-branding-panel">
           <div className="auth-brand-logo">
             <img
-              src="/splitmate-logo.png"
+              src="/splitmate-logo.svg"
               alt="SplitMate Logo"
               className="auth-brand-logo-img"
             />

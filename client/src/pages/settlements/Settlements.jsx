@@ -17,10 +17,15 @@ import {
   ChevronRight,
   ShieldCheck,
   Info,
-  Clock
+  Clock,
+  FileDown
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
 import { useAuth } from "../../context/useAuth";
+import {
+  downloadCsvBlob,
+  getStandardExportFilename
+} from "../../services/csvUtils";
 import {
   formatINR,
   classifyTransfer,
@@ -74,6 +79,7 @@ export function Settlements() {
   const [isRecordModalOpen, setIsRecordModalOpen] = useState(false);
   const [selectedTransferForModal, setSelectedTransferForModal] = useState(null);
   const [actionSuccessMessage, setActionSuccessMessage] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   // Load all user groups on mount
   useEffect(() => {
@@ -215,6 +221,29 @@ export function Settlements() {
     return groups.find((g) => (g.id || g._id)?.toString() === selectedGroupId?.toString());
   }, [groups, selectedGroupId]);
 
+  const handleDownloadSettlementsCsv = async () => {
+    if (isExporting || !selectedGroupId) return;
+    setIsExporting(true);
+    setDetailsError(null);
+
+    try {
+      const { blob, filename } = await api.settlements.exportCsv(selectedGroupId);
+      const targetFilename = filename || getStandardExportFilename("settlements");
+      downloadCsvBlob(blob, targetFilename);
+
+      setActionSuccessMessage(
+        `Settlements CSV downloaded successfully (${selectedGroup?.name || "Group"}).`
+      );
+      setTimeout(() => setActionSuccessMessage(null), 5000);
+    } catch (err) {
+      setDetailsError(
+        err instanceof ApiError ? err.message : "Failed to download settlements CSV."
+      );
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   const currentUserId = (user?.id || user?._id)?.toString();
 
   const isMe = (uid) => {
@@ -317,41 +346,53 @@ export function Settlements() {
         <div className="settlements-title-wrap header-meta">
           <div className="settlements-title-row header-title-row">
             <h1 className="settlements-title">Settlements & Debt Minimization</h1>
-            <Badge variant="mint" size="sm">
-              ENGINE V1.0
-            </Badge>
           </div>
           <p className="settlements-subtitle">
             Simplified payment schedules that settle group debts in the fewest possible transactions.
           </p>
         </div>
 
-        {/* Group Selector Dropdown */}
-        <div className="settlements-group-selector-box">
-          <label htmlFor="group-select" className="selector-label">
-            Active Ledger:
-          </label>
-          <div className="selector-control-wrap">
-            <div className="selector-icon">
-              {renderCategoryIcon(selectedGroup?.category, 16)}
+        {/* Group Selector & Header Actions */}
+        <div className="settlements-header-actions">
+          <div className="settlements-group-selector-box">
+            <label htmlFor="group-select" className="selector-label">
+              Active Ledger:
+            </label>
+            <div className="selector-control-wrap">
+              <div className="selector-icon">
+                {renderCategoryIcon(selectedGroup?.category, 16)}
+              </div>
+              <select
+                id="group-select"
+                className="group-select-input"
+                value={selectedGroupId}
+                onChange={(e) => handleGroupChange(e.target.value)}
+                aria-label="Select group ledger"
+              >
+                {groups.map((g) => {
+                  const gid = g.id || g._id;
+                  return (
+                    <option key={gid} value={gid}>
+                      {g.name} ({g.memberCount || g.members?.length || 1} members)
+                    </option>
+                  );
+                })}
+              </select>
             </div>
-            <select
-              id="group-select"
-              className="group-select-input"
-              value={selectedGroupId}
-              onChange={(e) => handleGroupChange(e.target.value)}
-              aria-label="Select group ledger"
-            >
-              {groups.map((g) => {
-                const gid = g.id || g._id;
-                return (
-                  <option key={gid} value={gid}>
-                    {g.name} ({g.memberCount || g.members?.length || 1} members)
-                  </option>
-                );
-              })}
-            </select>
           </div>
+
+          <Button
+            variant="outline"
+            size="md"
+            icon={FileDown}
+            isLoading={isExporting}
+            disabled={isExporting || !selectedGroupId}
+            onClick={handleDownloadSettlementsCsv}
+            title="Download Settlements CSV"
+            className="settlements-export-btn"
+          >
+            Download Settlements CSV
+          </Button>
         </div>
       </div>
 
@@ -773,6 +814,18 @@ export function Settlements() {
                     Recorded peer payments and reimbursements for {selectedGroup?.name}
                   </span>
                 </div>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  icon={FileDown}
+                  isLoading={isExporting}
+                  disabled={isExporting || !selectedGroupId}
+                  onClick={handleDownloadSettlementsCsv}
+                  title="Download Settlements CSV"
+                >
+                  Download Settlements CSV
+                </Button>
               </CardHeader>
               <CardContent>
                 {settlementHistory.length === 0 ? (

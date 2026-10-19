@@ -43,8 +43,9 @@ async function request(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
   const token = tokenStorage.get();
 
+  const isBlob = options.responseType === "blob";
   const headers = {
-    Accept: "application/json",
+    Accept: isBlob ? "text/csv, application/json, */*" : "application/json",
     ...options.headers
   };
 
@@ -59,13 +60,25 @@ async function request(endpoint, options = {}) {
 
   try {
     const res = await fetch(url, { ...options, headers });
-    const data = await res.json().catch(() => null);
 
     if (!res.ok) {
+      const data = await res.json().catch(() => null);
       const errorMessage = data?.error || data?.message || `Request failed with status ${res.status}`;
       throw new ApiError(errorMessage, res.status, data);
     }
 
+    if (isBlob) {
+      const blob = await res.blob();
+      const disposition = res.headers.get("Content-Disposition");
+      let filename = null;
+      if (disposition && disposition.includes("filename=")) {
+        const match = disposition.match(/filename=["']?([^"']+)["']?/);
+        if (match && match[1]) filename = match[1];
+      }
+      return { blob, filename };
+    }
+
+    const data = await res.json().catch(() => null);
     return data;
   } catch (error) {
     if (error instanceof ApiError) {
@@ -105,11 +118,27 @@ export const api = {
     create: (groupId, data) => request(`/api/v1/groups/${groupId}/expenses`, { method: "POST", body: data }),
     getById: (groupId, expenseId) => request(`/api/v1/groups/${groupId}/expenses/${expenseId}`, { method: "GET" }),
     update: (groupId, expenseId, data) => request(`/api/v1/groups/${groupId}/expenses/${expenseId}`, { method: "PUT", body: data }),
-    delete: (groupId, expenseId) => request(`/api/v1/groups/${groupId}/expenses/${expenseId}`, { method: "DELETE" })
+    delete: (groupId, expenseId) => request(`/api/v1/groups/${groupId}/expenses/${expenseId}`, { method: "DELETE" }),
+    exportCsv: (groupId, params = {}) => {
+      const query = new URLSearchParams(params).toString();
+      const endpoint =
+        groupId && groupId !== "all"
+          ? `/api/v1/groups/${groupId}/expenses/export${query ? `?${query}` : ""}`
+          : `/api/v1/groups/expenses/export${query ? `?${query}` : ""}`;
+      return request(endpoint, { method: "GET", responseType: "blob" });
+    }
   },
   settlements: {
     list: (groupId) => request(`/api/v1/groups/${groupId}/settlements`, { method: "GET" }),
-    record: (groupId, data) => request(`/api/v1/groups/${groupId}/settlements`, { method: "POST", body: data })
+    record: (groupId, data) => request(`/api/v1/groups/${groupId}/settlements`, { method: "POST", body: data }),
+    exportCsv: (groupId, params = {}) => {
+      const query = new URLSearchParams(params).toString();
+      const endpoint =
+        groupId && groupId !== "all"
+          ? `/api/v1/groups/${groupId}/settlements/export${query ? `?${query}` : ""}`
+          : `/api/v1/groups/settlements/export${query ? `?${query}` : ""}`;
+      return request(endpoint, { method: "GET", responseType: "blob" });
+    }
   },
   analytics: {
     getGroupAnalytics: (groupId, params = {}) => {

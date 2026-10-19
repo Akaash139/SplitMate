@@ -55,7 +55,7 @@
 }
 
 .friends-metric-card {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 14px 18px;
@@ -122,7 +122,7 @@
 
 /* Toolbar & Filters */
 .friends-toolbar {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 12px 16px;
@@ -151,7 +151,7 @@
 .friends-search-box:focus-within {
   border-color: var(--teal-500);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
 }
 
 .friends-search-icon {
@@ -197,7 +197,7 @@
 }
 
 .friends-pill.is-active {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   color: var(--teal-700);
   font-weight: 600;
   box-shadow: var(--shadow-sm);
@@ -213,7 +213,7 @@
 
 /* Left Column: Friends List */
 .friends-list-panel {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -228,7 +228,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fafafa;
+  background-color: var(--charcoal-50);
 }
 
 .friends-panel-title {
@@ -253,7 +253,7 @@
   justify-content: space-between;
   gap: 12px;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   transition: background-color 0.15s ease, border-color 0.15s ease;
   border-left: 3px solid transparent;
 }
@@ -364,7 +364,7 @@
 
 /* Right Column: Ledger Detail Panel */
 .friend-ledger-panel {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -557,7 +557,7 @@
   color: var(--teal-700);
   font-weight: 600;
   border-bottom-color: var(--teal-600);
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
 }
 
 /* Transactions Content */
@@ -577,7 +577,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 12px 16px;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: border-color 0.15s ease;
@@ -644,7 +644,7 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);

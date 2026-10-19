@@ -78,7 +78,7 @@ export function JoinGroup() {
       <div className="join-group-card-wrapper">
         <div className="join-brand-badge">
           <img
-            src="/splitmate-logo.png"
+            src="/splitmate-logo.svg"
             alt="SplitMate Logo"
             className="join-brand-logo-img"
           />

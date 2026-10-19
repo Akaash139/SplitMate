@@ -4,6 +4,7 @@ const Expense = require("../models/Expense");
 const { authenticate } = require("../middleware/authMiddleware");
 const { requireGroupMember } = require("../middleware/groupMiddleware");
 const { calculateSplits, toPaise } = require("../utils/expenseSplits");
+const { generateExpensesCsv } = require("../utils/csvEngine");
 
 const router = express.Router({ mergeParams: true });
 
@@ -228,6 +229,133 @@ router.get("/", async (req, res, next) => {
       count: expenses.length,
       expenses: expenses.map(formatExpenseResponse)
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * @route   GET /api/v1/groups/:groupId/expenses/export
+ * @desc    Export group expenses as an RFC 4180 CSV document
+ * @access  Private (Group Member)
+ */
+router.get("/export", async (req, res, next) => {
+  try {
+    const { category, payer, search, startDate, endDate } = req.query;
+
+    const filter = { group: req.group._id };
+
+    if (category && category !== "all") {
+      filter.category = category;
+    }
+
+    if (payer && payer !== "all") {
+      if (payer === "mine") {
+        filter.paidBy = req.user._id;
+      } else if (mongoose.Types.ObjectId.isValid(payer)) {
+        filter.paidBy = new mongoose.Types.ObjectId(payer);
+      }
+    }
+
+    if (startDate || endDate) {
+      filter.createdAt = {};
+      if (startDate) {
+        const s = new Date(startDate);
+        if (!isNaN(s.getTime())) filter.createdAt.$gte = s;
+      }
+      if (endDate) {
+        const e = new Date(endDate);
+        if (!isNaN(e.getTime())) {
+          e.setHours(23, 59, 59, 999);
+          filter.createdAt.$lte = e;
+        }
+      }
+      if (Object.keys(filter.createdAt).length === 0) {
+        delete filter.createdAt;
+      }
+    }
+
+    if (search && typeof search === "string" && search.trim()) {
+      filter.description = { $regex: search.trim(), $options: "i" };
+    }
+
+    const expenses = await Expense.find(filter)
+      .sort({ createdAt: -1 })
+      .populate("paidBy", "name email avatar")
+      .populate("createdBy", "name email avatar");
+
+    const csvContent = generateExpensesCsv(expenses, {
+      groupName: req.group.name,
+      currency: "INR"
+    });
+
+    const dateStr = new Date().toISOString().split("T")[0];
+    const filename = `splitmate-expenses-${dateStr}.csv`;
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    return res.status(200).send(csvContent);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/export/csv", async (req, res, next) => {
+  try {
+    const { category, payer, search, startDate, endDate } = req.query;
+
+    const filter = { group: req.group._id };
+
+    if (category && category !== "all") {
+      filter.category = category;
+    }
+
+    if (payer && payer !== "all") {
+      if (payer === "mine") {
+        filter.paidBy = req.user._id;
+      } else if (mongoose.Types.ObjectId.isValid(payer)) {
+        filter.paidBy = new mongoose.Types.ObjectId(payer);
+      }
+    }
+
+    if (startDate || endDate) {
+      filter.createdAt = {};
+      if (startDate) {
+        const s = new Date(startDate);
+        if (!isNaN(s.getTime())) filter.createdAt.$gte = s;
+      }
+      if (endDate) {
+        const e = new Date(endDate);
+        if (!isNaN(e.getTime())) {
+          e.setHours(23, 59, 59, 999);
+          filter.createdAt.$lte = e;
+        }
+      }
+      if (Object.keys(filter.createdAt).length === 0) {
+        delete filter.createdAt;
+      }
+    }
+
+    if (search && typeof search === "string" && search.trim()) {
+      filter.description = { $regex: search.trim(), $options: "i" };
+    }
+
+    const expenses = await Expense.find(filter)
+      .sort({ createdAt: -1 })
+      .populate("paidBy", "name email avatar")
+      .populate("createdBy", "name email avatar");
+
+    const csvContent = generateExpensesCsv(expenses, {
+      groupName: req.group.name,
+      currency: "INR"
+    });
+
+    const dateStr = new Date().toISOString().split("T")[0];
+    const filename = `splitmate-expenses-${dateStr}.csv`;
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    return res.status(200).send(csvContent);
   } catch (error) {
     next(error);
   }
