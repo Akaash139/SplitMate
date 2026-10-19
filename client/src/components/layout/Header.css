@@ -133,6 +133,63 @@
   border-color: #f59e0b;
 }
 
+/* Header Install Button */
+.header-install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--teal-50);
+  border: 1px solid var(--teal-300);
+  color: var(--teal-700);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.15s ease;
+}
+
+.header-install-btn:hover {
+  background-color: var(--teal-100);
+  border-color: var(--teal-500);
+  color: var(--teal-800);
+}
+
+.header-install-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.25);
+}
+
+.header-install-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.header-install-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.header-install-text {
+  line-height: 1;
+}
+
+[data-theme="dark"] .header-install-btn {
+  background-color: rgba(20, 184, 166, 0.12);
+  border-color: rgba(45, 212, 191, 0.3);
+  color: var(--teal-300);
+}
+
+[data-theme="dark"] .header-install-btn:hover {
+  background-color: rgba(20, 184, 166, 0.22);
+  border-color: var(--teal-400);
+  color: var(--teal-200);
+}
+
 .header-settle-btn {
   font-size: 13px;
   font-weight: 600;
@@ -271,8 +328,12 @@
 
 /* Responsive */
 @media (max-width: 900px) {
+  .splitmate-header {
+    padding: 0 16px;
+  }
+
   .header-mobile-toggle {
-    display: flex;
+    display: none;
   }
 
   .header-mobile-brand {
@@ -318,7 +379,237 @@
 }
 
 @media (max-width: 480px) {
+  .splitmate-header {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .header-actions {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
   .header-mobile-brand-name {
     display: none;
   }
+
+  .header-install-btn {
+    padding: 0 10px;
+    gap: 5px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .splitmate-header {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .header-install-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .header-install-text {
+    display: none;
+  }
+}
+
+/* Install Guide Modal */
+.install-guide-modal-container {
+  max-width: 440px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.install-guide-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.install-guide-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.install-guide-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background-color: var(--teal-50);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .install-guide-icon-box {
+  background-color: rgba(20, 184, 166, 0.15);
+  color: var(--teal-400);
+}
+
+.install-guide-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+  line-height: 1.2;
+}
+
+.install-guide-subtitle {
+  font-size: 12px;
+  color: var(--charcoal-500);
+  margin-top: 2px;
+}
+
+.install-guide-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.install-guide-intro {
+  font-size: 13px;
+  color: var(--charcoal-700);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.install-guide-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.install-guide-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .install-guide-step-item {
+  background-color: var(--charcoal-100);
+}
+
+.install-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background-color: var(--teal-600);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.install-step-text {
+  font-size: 12.5px;
+  color: var(--charcoal-800);
+  line-height: 1.4;
+}
+
+.install-step-inline-icon {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  padding: 1px 4px;
+  background-color: var(--charcoal-200);
+  border-radius: 4px;
+  margin: 0 2px;
+  color: var(--charcoal-800);
+}
+
+[data-theme="dark"] .install-step-inline-icon {
+  background-color: var(--charcoal-200);
+  color: var(--charcoal-900);
+}
+
+.install-guide-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.install-guide-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background-color: var(--charcoal-50);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .install-guide-section {
+  background-color: var(--charcoal-100);
+}
+
+.install-guide-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--charcoal-900);
+}
+
+.install-guide-section-desc {
+  font-size: 12px;
+  color: var(--charcoal-600);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.install-guide-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--teal-50);
+  border: 1px solid var(--teal-200);
+  font-size: 12px;
+  color: var(--teal-800);
+  line-height: 1.4;
+}
+
+[data-theme="dark"] .install-guide-note {
+  background-color: rgba(20, 184, 166, 0.1);
+  border-color: rgba(20, 184, 166, 0.25);
+  color: var(--teal-300);
+}
+
+.install-guide-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: flex-end;
 }

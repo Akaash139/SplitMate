@@ -1204,9 +1204,10 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .settlements-page {
-    padding: 16px 16px 48px;
+    padding: 0 0 24px;
+    max-width: 100%;
   }
 
   .settlements-top-nav {
@@ -1219,5 +1220,295 @@
 
   .settlements-header {
     margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .transfers-list {
+    padding: 12px 8px;
+  }
+
+  .transfer-card {
+    padding: 14px 12px;
+  }
+
+  /* Suggested Transfers: Mobile Stacked Card Flow */
+  .transfer-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    background: var(--charcoal-50);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    border: 1px solid var(--border-subtle);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  [data-theme="dark"] .transfer-card-body {
+    background: var(--charcoal-200);
+    border-color: var(--charcoal-300);
+  }
+
+  .transfer-party {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .transfer-party.recipient-party {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .recipient-party .party-details {
+    align-items: flex-start;
+  }
+
+  .party-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 13.5px;
+    flex-shrink: 0;
+  }
+
+  .party-details {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .party-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--charcoal-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  [data-theme="dark"] .party-name {
+    color: #ffffff;
+  }
+
+  .party-role {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--charcoal-500);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Center Amount Pill in Stacked Flow */
+  .transfer-amount-flow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--bg-surface);
+    border: 1px dashed var(--teal-300);
+    border-radius: var(--radius-full);
+    align-self: center;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  [data-theme="dark"] .transfer-amount-flow {
+    border-color: var(--teal-700);
+    background: var(--charcoal-100);
+  }
+
+  .transfer-arrow-track {
+    display: none;
+  }
+
+  .transfer-amount-tag {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .amount-number {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--teal-700);
+  }
+
+  [data-theme="dark"] .amount-number {
+    color: var(--teal-400);
+  }
+
+  .currency-prefix {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--teal-600);
+  }
+
+  .paise-subtext {
+    font-size: 10.5px;
+    color: var(--charcoal-500);
+    border-left: 1px solid var(--border-color);
+    padding-left: 6px;
+  }
+
+  .transfer-card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding-top: 10px;
+  }
+
+  .transfer-card-footer button {
+    width: 100%;
+    min-height: 42px;
+    justify-content: center;
+    font-size: 13.5px;
+  }
+
+  .transfer-explanation {
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.45;
+    color: var(--charcoal-600);
+  }
+
+  /* Member Balances List on Mobile: 2-Row Structured Grid */
+  .member-balances-list {
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .member-balance-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "avatar-meta balance"
+      "breakdown breakdown";
+    gap: 8px 10px;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--charcoal-50);
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  [data-theme="dark"] .member-balance-item {
+    background: var(--charcoal-200);
+    border-color: var(--charcoal-300);
+  }
+
+  .member-balance-item.is-current-user {
+    background: var(--teal-50);
+    border-color: var(--teal-200);
+  }
+
+  [data-theme="dark"] .member-balance-item.is-current-user {
+    background: rgba(13, 148, 136, 0.12);
+    border-color: var(--teal-700);
+  }
+
+  .member-avatar-meta {
+    grid-area: avatar-meta;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .member-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .member-names {
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .member-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--charcoal-900);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  [data-theme="dark"] .member-name {
+    color: #ffffff;
+  }
+
+  .member-email {
+    font-size: 11px;
+    color: var(--charcoal-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .member-figures {
+    display: contents;
+  }
+
+  .net-balance-wrap {
+    grid-area: balance;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .net-balance-amount {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .figures-breakdown {
+    grid-area: breakdown;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border-subtle);
+    font-size: 11.5px;
+    color: var(--charcoal-600);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  [data-theme="dark"] .figures-breakdown {
+    border-top-color: var(--charcoal-300);
+    color: var(--charcoal-400);
+  }
+
+  .figure-paid,
+  .figure-share {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11.5px;
   }
 }

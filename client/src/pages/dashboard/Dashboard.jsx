@@ -266,7 +266,7 @@ export function Dashboard() {
             <span className="welcome-date">{today}</span>
           </div>
           <h1 className="welcome-title">
-            Welcome back, {user?.name?.split(" ")[0] || "Friend"} 👋
+            Welcome back, {user?.name?.split(" ")[0] || "Friend"}
           </h1>
           <p className="welcome-subtitle">
             You&apos;re connected to SplitMate. Manage your group expenses, calculate who owes whom, and settle debts with fewer payments.
@@ -333,8 +333,8 @@ export function Dashboard() {
                     groupBalanceData.currentUserBalance.netBalancePaise > 0
                       ? "emerald"
                       : groupBalanceData.currentUserBalance.netBalancePaise < 0
-                      ? "rose"
-                      : "mint"
+                        ? "rose"
+                        : "mint"
                   }
                   size="sm"
                   className="stat-growth-badge"
@@ -342,8 +342,8 @@ export function Dashboard() {
                   {groupBalanceData.currentUserBalance.netBalancePaise > 0
                     ? "Owed"
                     : groupBalanceData.currentUserBalance.netBalancePaise < 0
-                    ? "Owes"
-                    : "Settled"}
+                      ? "Owes"
+                      : "Settled"}
                 </Badge>
               ) : null}
             </div>
@@ -354,19 +354,18 @@ export function Dashboard() {
                 <span className="stat-amount text-muted">Calculating...</span>
               ) : groupBalanceData?.currentUserBalance ? (
                 <span
-                  className={`stat-amount ${
-                    groupBalanceData.currentUserBalance.netBalancePaise > 0
+                  className={`stat-amount ${groupBalanceData.currentUserBalance.netBalancePaise > 0
                       ? "text-emerald"
                       : groupBalanceData.currentUserBalance.netBalancePaise < 0
-                      ? "text-rose"
-                      : ""
-                  }`}
+                        ? "text-rose"
+                        : ""
+                    }`}
                 >
                   {groupBalanceData.currentUserBalance.netBalancePaise > 0
                     ? `+₹${formatCurrency(groupBalanceData.currentUserBalance.netBalance)}`
                     : groupBalanceData.currentUserBalance.netBalancePaise < 0
-                    ? `-₹${formatCurrency(Math.abs(groupBalanceData.currentUserBalance.netBalance))}`
-                    : "₹0.00"}
+                      ? `-₹${formatCurrency(Math.abs(groupBalanceData.currentUserBalance.netBalance))}`
+                      : "₹0.00"}
                 </span>
               ) : (
                 <span className="stat-amount text-muted">--</span>
@@ -436,8 +435,8 @@ export function Dashboard() {
                 {groups.length === 0
                   ? "No debts pending"
                   : groups.length === 1
-                  ? `Obligations in ${groups[0].name}`
-                  : `In ${balanceGroup?.name || "active ledger"}. Open Settlements for full plan.`}
+                    ? `Obligations in ${groups[0].name}`
+                    : `In ${balanceGroup?.name || "active ledger"}. Open Settlements for full plan.`}
               </span>
             </div>
           </CardContent>
@@ -481,8 +480,8 @@ export function Dashboard() {
                 {groups.length === 0
                   ? "No receivables pending"
                   : groups.length === 1
-                  ? `Receivables in ${groups[0].name}`
-                  : `In ${balanceGroup?.name || "active ledger"}. Open Settlements to settle.`}
+                    ? `Receivables in ${groups[0].name}`
+                    : `In ${balanceGroup?.name || "active ledger"}. Open Settlements to settle.`}
               </span>
             </div>
           </CardContent>

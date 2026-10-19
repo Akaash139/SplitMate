@@ -12,7 +12,8 @@ import {
   Wallet,
   TrendingUp,
   RotateCcw,
-  FileDown
+  FileDown,
+  PieChart
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
 import { useAuth } from "../../context/useAuth";
@@ -376,6 +377,31 @@ export function AllExpenses() {
             Add an Expense
           </Button>
         </div>
+      </div>
+
+      {/* Contextual Scope Switcher: Expenses & Analytics */}
+      <div className="activity-scope-switcher" role="tablist" aria-label="Activity and Analytics views">
+        <button
+          type="button"
+          role="tab"
+          aria-selected="true"
+          className="scope-tab is-active"
+          id="scope-tab-expenses"
+        >
+          <Receipt size={15} />
+          <span>Expenses</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          className="scope-tab"
+          onClick={() => navigate("/analytics")}
+          id="scope-tab-analytics"
+        >
+          <PieChart size={15} />
+          <span>Analytics</span>
+        </button>
       </div>
 
       {/* Action Feedback Alert */}

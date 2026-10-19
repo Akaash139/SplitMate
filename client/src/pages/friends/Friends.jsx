@@ -16,7 +16,8 @@ import {
   TrendingUp,
   TrendingDown,
   RotateCcw,
-  UserCheck
+  UserCheck,
+  ArrowLeft
 } from "lucide-react";
 import { api, ApiError } from "../../services/api";
 import { useAuth } from "../../context/useAuth";
@@ -249,13 +250,23 @@ export function Friends() {
 
   return (
     <div className="friends-page animate-fade-in">
+      {/* Top Breadcrumb & Back to Groups Link */}
+      <div className="friends-top-nav">
+        <button
+          type="button"
+          onClick={() => navigate("/groups")}
+          className="friends-back-btn"
+          id="friends-back-to-groups"
+        >
+          <ArrowLeft size={16} />
+          <span>Back to Groups</span>
+        </button>
+      </div>
+
       {/* Page Header */}
       <div className="friends-page-header">
         <div className="friends-title-wrap">
           <div className="friends-badge-row">
-            <Badge variant="mint" size="sm">
-              PEER DIRECTORY
-            </Badge>
             <span style={{ fontSize: "12px", color: "var(--charcoal-500)" }}>
               {friendsList.length} {friendsList.length === 1 ? "Friend" : "Friends"} Across {groups.length} {groups.length === 1 ? "Group" : "Groups"}
             </span>
@@ -278,6 +289,31 @@ export function Friends() {
             Refresh
           </Button>
         </div>
+      </div>
+
+      {/* Contextual Scope Switcher: Groups & Friends */}
+      <div className="groups-scope-switcher" role="tablist" aria-label="Groups and Friends views">
+        <button
+          type="button"
+          role="tab"
+          aria-selected="false"
+          className="scope-tab"
+          onClick={() => navigate("/groups")}
+          id="scope-tab-groups"
+        >
+          <Users size={15} />
+          <span>Groups</span>
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected="true"
+          className="scope-tab is-active"
+          id="scope-tab-friends"
+        >
+          <UserCheck size={15} />
+          <span>Friends</span>
+        </button>
       </div>
 
       {/* Action Feedback Alert */}
