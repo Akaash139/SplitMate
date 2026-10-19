@@ -14,7 +14,7 @@ import { Settlements } from "./pages/settlements/Settlements";
 import { AllExpenses } from "./pages/expenses/AllExpenses";
 import { Friends } from "./pages/friends/Friends";
 import { Analytics } from "./pages/analytics/Analytics";
-import { PlaceholderPage } from "./pages/placeholder/PlaceholderPage";
+import { Settings } from "./pages/settings/Settings";
 import "./App.css";
 
 function App() {
@@ -43,16 +43,7 @@ function App() {
               <Route path="/activity" element={<Navigate to="/expenses" replace />} />
               <Route path="/settlements" element={<Settlements />} />
               <Route path="/analytics" element={<Analytics />} />
-              <Route
-                path="/settings"
-                element={
-                  <PlaceholderPage
-                    title="Account Settings"
-                    description="Manage personal profile, currency preferences, and notifications."
-                    milestone="TASK 5"
-                  />
-                }
-              />
+              <Route path="/settings" element={<Settings />} />
             </Route>
           </Route>
 

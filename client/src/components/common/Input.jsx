@@ -9,6 +9,7 @@ export const Input = forwardRef(function Input(
     helperText,
     type = "text",
     icon: Icon,
+    prefix,
     id,
     name,
     required = false,
@@ -39,12 +40,18 @@ export const Input = forwardRef(function Input(
           </span>
         )}
 
+        {prefix && !Icon && (
+          <span className="input-prefix-text" aria-hidden="true">
+            {prefix}
+          </span>
+        )}
+
         <input
           ref={ref}
           id={inputId}
           name={name}
           type={effectiveType}
-          className={`input-element ${Icon ? "with-leading-icon" : ""} ${isPassword ? "with-trailing-icon" : ""}`}
+          className={`input-element ${Icon ? "with-leading-icon" : ""} ${prefix && !Icon ? "with-prefix" : ""} ${isPassword ? "with-trailing-icon" : ""}`}
           required={required}
           {...props}
         />

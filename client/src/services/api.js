@@ -94,7 +94,9 @@ export const api = {
     register: (userData) => request("/api/v1/auth/register", { method: "POST", body: userData }),
     login: (credentials) => request("/api/v1/auth/login", { method: "POST", body: credentials }),
     googleLogin: (credential) => request("/api/v1/auth/google", { method: "POST", body: { credential } }),
-    getMe: () => request("/api/v1/auth/me", { method: "GET" })
+    getMe: () => request("/api/v1/auth/me", { method: "GET" }),
+    updateProfile: (data) => request("/api/v1/auth/profile", { method: "PUT", body: data }),
+    changePassword: (data) => request("/api/v1/auth/password", { method: "PUT", body: data })
   },
   groups: {
     list: () => request("/api/v1/groups", { method: "GET" }),

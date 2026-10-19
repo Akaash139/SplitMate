@@ -115,6 +115,11 @@ export function AuthProvider({ children }) {
     setError(null);
   };
 
+  // Update user state in-memory (e.g. after profile name edit)
+  const updateUser = (updatedFields) => {
+    setUser((prev) => (prev ? { ...prev, ...updatedFields } : null));
+  };
+
   const clearError = () => setError(null);
 
   const value = {
@@ -127,6 +132,7 @@ export function AuthProvider({ children }) {
     register,
     loginWithGoogle,
     logout,
+    updateUser,
     clearError
   };
 

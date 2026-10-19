@@ -295,6 +295,124 @@ router.get("/me", authenticate, async (req, res) => {
   });
 });
 
+/**
+ * @route   PUT /api/v1/auth/profile
+ * @desc    Update currently authenticated user's profile information (name)
+ * @access  Private (JWT)
+ */
+router.put("/profile", authenticate, async (req, res, next) => {
+  try {
+    const { name } = req.body;
+
+    if (!name || typeof name !== "string" || !name.trim()) {
+      return res.status(400).json({
+        success: false,
+        error: "Name is required and cannot be empty"
+      });
+    }
+
+    const trimmedName = name.trim();
+    if (trimmedName.length < 2 || trimmedName.length > 60) {
+      return res.status(400).json({
+        success: false,
+        error: "Name must be between 2 and 60 characters long"
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+
+    user.name = trimmedName;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      user: formatUserResponse(user)
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * @route   PUT /api/v1/auth/password
+ * @desc    Change password for email/password accounts
+ * @access  Private (JWT)
+ */
+router.put("/password", authenticate, async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(req.user._id).select("+password");
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: "User not found"
+      });
+    }
+
+    // Google-only accounts do not have passwords stored in SplitMate
+    if (user.authProvider === "google" && !user.password) {
+      return res.status(400).json({
+        success: false,
+        error: "Password changes are unavailable for accounts managed by Google. Please manage your security in your Google Account."
+      });
+    }
+
+    if (!currentPassword || typeof currentPassword !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "Current password is required"
+      });
+    }
+
+    if (!newPassword || typeof newPassword !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "New password is required"
+      });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        error: "New password must be at least 6 characters long"
+      });
+    }
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        error: "Incorrect current password"
+      });
+    }
+
+    if (currentPassword === newPassword) {
+      return res.status(400).json({
+        success: false,
+        error: "New password cannot be the same as your current password"
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Password changed successfully"
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Test hook to allow mocking Google token verification without network calls
 router._setGoogleVerifier = (fn) => {
   verifyGoogleToken = fn;

@@ -80,6 +80,12 @@
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
 }
 
+.input-currency-wrapper:has(:disabled) {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--charcoal-50);
+}
+
 .currency-symbol {
   font-size: 15px;
   font-weight: 700;
@@ -93,7 +99,18 @@
   width: 100%;
   font-size: 14.5px;
   color: var(--charcoal-900);
+  background: transparent;
+  caret-color: currentColor;
   font-weight: 500;
+}
+
+.currency-input-field::placeholder {
+  color: var(--charcoal-400);
+}
+
+.currency-input-field:disabled {
+  cursor: not-allowed;
+  color: var(--charcoal-500);
 }
 
 /* Custom Select Field */
@@ -104,7 +121,7 @@
   background-color: var(--bg-surface);
   padding: 0 12px;
   font-size: 14px;
-  color: var(--charcoal-800);
+  color: var(--charcoal-900);
   outline: none;
   transition: border-color 0.15s ease;
 }
@@ -112,6 +129,11 @@
 .custom-select-field:focus {
   border-color: var(--teal-600);
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.custom-select-field option {
+  background-color: var(--bg-surface);
+  color: var(--charcoal-900);
 }
 
 /* Split Type Tabs */
@@ -205,13 +227,13 @@
 }
 
 .split-summary-box.balanced {
-  border-color: #bbf7d0;
-  background-color: #f0fdf4;
+  border-color: var(--emerald-500);
+  background-color: var(--emerald-50);
 }
 
 .split-summary-box.unbalanced {
-  border-color: #fed7aa;
-  background-color: #fffaf5;
+  border-color: var(--amber-500);
+  background-color: var(--amber-50);
 }
 
 .split-summary-info {
@@ -366,7 +388,13 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--charcoal-900);
+  background: transparent;
+  caret-color: currentColor;
   text-align: right;
+}
+
+.member-split-input::placeholder {
+  color: var(--charcoal-400);
 }
 
 .computed-rupee-preview {

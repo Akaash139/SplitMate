@@ -43,15 +43,27 @@
   box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
 }
 
+.input-wrapper:has(:disabled) {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--charcoal-50);
+}
+
 .input-element {
   width: 100%;
   padding: 10px 14px;
   font-size: 14px;
   color: var(--charcoal-900);
   background: transparent;
+  caret-color: currentColor;
   border: none;
   outline: none;
   border-radius: var(--radius-md);
+}
+
+.input-element:disabled {
+  cursor: not-allowed;
+  color: var(--charcoal-500);
 }
 
 .input-element::placeholder {
@@ -60,6 +72,10 @@
 
 .input-element.with-leading-icon {
   padding-left: 40px;
+}
+
+.input-element.with-prefix {
+  padding-left: 28px;
 }
 
 .input-element.with-trailing-icon {
@@ -73,6 +89,18 @@
   align-items: center;
   color: var(--charcoal-400);
   pointer-events: none;
+}
+
+.input-prefix-text {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--charcoal-500);
+  pointer-events: none;
+  user-select: none;
 }
 
 .input-password-toggle {

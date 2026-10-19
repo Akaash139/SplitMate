@@ -415,4 +415,320 @@ describe("Task 1: Authentication & Error Handling Test Suite", () => {
       assert.ok(res.body.error.includes("Route not found"));
     });
   });
+
+  describe("7. Profile Updates (PUT /api/v1/auth/profile)", () => {
+    it("should reject unauthenticated profile update with 401", async () => {
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/profile",
+        body: { name: "New Name" }
+      });
+
+      assert.equal(res.status, 401);
+      assert.equal(res.body.success, false);
+    });
+
+    it("should reject missing or empty name with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      User.findById = () => ({
+        select: async () => ({
+          _id: "user_123",
+          name: "Akaash",
+          email: "user@example.com"
+        })
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/profile",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { name: "   " }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("Name is required"));
+    });
+
+    it("should reject name shorter than 2 characters with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      User.findById = () => ({
+        select: async () => ({
+          _id: "user_123",
+          name: "Akaash",
+          email: "user@example.com"
+        })
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/profile",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { name: "A" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("between 2 and 60"));
+    });
+
+    it("should successfully update profile name and return sanitized user", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUserDoc = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        avatar: "",
+        authProvider: "local",
+        createdAt: new Date().toISOString(),
+        save: async function () {
+          return this;
+        }
+      };
+
+      // Mock for auth middleware (select("-password"))
+      // and mock for route handler (findById(req.user._id))
+      User.findById = (id) => {
+        return {
+          select: async () => mockUserDoc,
+          then: (resolve) => resolve(mockUserDoc)
+        };
+      };
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/profile",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { name: "Akaash Paran" }
+      });
+
+      assert.equal(res.status, 200);
+      assert.equal(res.body.success, true);
+      assert.equal(res.body.user.name, "Akaash Paran");
+      assert.equal(res.body.user.password, undefined);
+    });
+  });
+
+  describe("8. Password Changes (PUT /api/v1/auth/password)", () => {
+    it("should reject unauthenticated password change with 401", async () => {
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        body: { currentPassword: "OldPassword123", newPassword: "NewPassword123" }
+      });
+
+      assert.equal(res.status, 401);
+      assert.equal(res.body.success, false);
+    });
+
+    it("should reject missing passwords with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUser = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        authProvider: "local",
+        password: "hashed_existing_password"
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "oldPassword123" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("New password is required"));
+    });
+
+    it("should reject new password under 6 characters with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUser = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        authProvider: "local",
+        password: "hashed_existing_password"
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "oldPassword123", newPassword: "123" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("at least 6 characters"));
+    });
+
+    it("should reject password change for Google-only users without local password", async () => {
+      const token = jwt.sign(
+        { id: "user_google", email: "google@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUser = {
+        _id: "user_google",
+        name: "Google User",
+        email: "google@example.com",
+        authProvider: "google",
+        password: null
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "anyPassword", newPassword: "newValidPassword123" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("managed by Google"));
+    });
+
+    it("should reject incorrect current password with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUser = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        authProvider: "local",
+        password: "hashed_password",
+        comparePassword: async () => false
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "WrongPassword123", newPassword: "NewSecretPassword123" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.equal(res.body.error, "Incorrect current password");
+    });
+
+    it("should reject new password if identical to current password with 400", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      const mockUser = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        authProvider: "local",
+        password: "hashed_password",
+        comparePassword: async () => true
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "SamePassword123", newPassword: "SamePassword123" }
+      });
+
+      assert.equal(res.status, 400);
+      assert.equal(res.body.success, false);
+      assert.ok(res.body.error.includes("cannot be the same"));
+    });
+
+    it("should successfully change password when current password is verified", async () => {
+      const token = jwt.sign(
+        { id: "user_123", email: "user@example.com" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
+      let savedPassword = null;
+      const mockUser = {
+        _id: "user_123",
+        name: "Akaash",
+        email: "user@example.com",
+        authProvider: "local",
+        password: "hashed_old_password",
+        comparePassword: async (candidate) => candidate === "OldPassword123",
+        save: async function () {
+          savedPassword = this.password;
+          return this;
+        }
+      };
+
+      User.findById = () => ({
+        select: async () => mockUser
+      });
+
+      const res = await request(server, {
+        method: "PUT",
+        path: "/api/v1/auth/password",
+        headers: { Authorization: `Bearer ${token}` },
+        body: { currentPassword: "OldPassword123", newPassword: "BrandNewPassword123" }
+      });
+
+      assert.equal(res.status, 200);
+      assert.equal(res.body.success, true);
+      assert.equal(res.body.message, "Password changed successfully");
+      assert.equal(savedPassword, "BrandNewPassword123");
+    });
+  });
 });

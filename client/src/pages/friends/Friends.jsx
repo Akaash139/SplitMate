@@ -573,7 +573,7 @@ export function Friends() {
                       You Owe ₹{formatINR(selectedFriend.ledger.totalYouOwe)}
                     </span>
                   ) : selectedFriend.ledger?.overallStatus === "mixed" ? (
-                    <span className="ledger-status-amount" style={{ color: "#2563EB", fontSize: "16px" }}>
+                    <span className="ledger-status-amount text-blue">
                       Owes You ₹{formatINR(selectedFriend.ledger.totalOwedToYou)} / You Owe ₹{formatINR(selectedFriend.ledger.totalYouOwe)}
                     </span>
                   ) : (

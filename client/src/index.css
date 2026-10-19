@@ -30,6 +30,7 @@
   --emerald-500: #10b981;
   --emerald-600: #059669;
   --emerald-700: #047857;
+  --emerald-900: #064e3b;
 
   --rose-50: #fff1f2;
   --rose-100: #ffe4e6;
@@ -41,6 +42,7 @@
   --amber-100: #fef3c7;
   --amber-500: #f59e0b;
   --amber-600: #d97706;
+  --amber-900: #78350f;
 
   --purple-50: #f5f3ff;
   --purple-100: #ede9fe;
@@ -68,6 +70,8 @@
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Color Scheme */
+  color-scheme: light;
 }
 
 /* SplitMate Dark Mode Theme Tokens */
@@ -100,14 +104,19 @@
   /* Subtle Tinted Accents for High Contrast in Dark Mode */
   --emerald-50: rgba(16, 185, 129, 0.14);
   --emerald-100: rgba(16, 185, 129, 0.22);
+  --emerald-900: #6ee7b7;
   --rose-50: rgba(244, 63, 94, 0.14);
   --rose-100: rgba(244, 63, 94, 0.22);
   --amber-50: rgba(245, 158, 11, 0.14);
   --amber-100: rgba(245, 158, 11, 0.22);
+  --amber-900: #fcd34d;
   --purple-50: rgba(139, 92, 246, 0.14);
   --purple-100: rgba(139, 92, 246, 0.22);
   --teal-50: rgba(20, 184, 166, 0.14);
   --teal-100: rgba(20, 184, 166, 0.22);
+
+  /* Color Scheme */
+  color-scheme: dark;
 }
 
 *, *::before, *::after {
@@ -145,6 +154,21 @@ a:hover {
 
 button, input, select, textarea {
   font-family: inherit;
+  color: inherit;
+}
+
+input, select, textarea {
+  caret-color: currentColor;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--charcoal-400);
+}
+
+select option {
+  background-color: var(--bg-surface);
+  color: var(--charcoal-900);
 }
 
 /* Scrollbar styling */

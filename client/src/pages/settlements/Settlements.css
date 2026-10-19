@@ -357,12 +357,12 @@
 
 .transfer-card.transfer-i-pay {
   border-left: 4px solid var(--rose-500);
-  background: linear-gradient(to right, #fff1f2 0%, var(--bg-surface) 35%);
+  background: linear-gradient(to right, var(--rose-50) 0%, var(--bg-surface) 35%);
 }
 
 .transfer-card.transfer-i-receive {
   border-left: 4px solid var(--emerald-500);
-  background: linear-gradient(to right, #ecfdf5 0%, var(--bg-surface) 35%);
+  background: linear-gradient(to right, var(--emerald-50) 0%, var(--bg-surface) 35%);
 }
 
 .transfer-card-header {
@@ -1033,8 +1033,18 @@
   color: var(--charcoal-900);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background: var(--bg-surface);
+  background-color: var(--bg-surface);
+  caret-color: currentColor;
   transition: all 0.15s ease;
+}
+
+.amount-input::placeholder {
+  color: var(--charcoal-400);
+}
+
+.amount-input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .amount-input:focus {
@@ -1045,7 +1055,7 @@
 
 .amount-input.has-error {
   border-color: var(--rose-500);
-  background: var(--rose-50);
+  background-color: var(--rose-50);
 }
 
 .amount-preset-chips {
@@ -1086,13 +1096,13 @@
 .notice-partial {
   background: var(--amber-50);
   color: var(--amber-900);
-  border: 1px solid var(--amber-200);
+  border: 1px solid var(--amber-500);
 }
 
 .notice-full {
   background: var(--emerald-50);
   color: var(--emerald-900);
-  border: 1px solid var(--emerald-200);
+  border: 1px solid var(--emerald-500);
 }
 
 .notes-input {
@@ -1101,9 +1111,19 @@
   font-size: 13.5px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  background: var(--bg-surface);
+  background-color: var(--bg-surface);
   color: var(--charcoal-900);
+  caret-color: currentColor;
   transition: all 0.15s ease;
+}
+
+.notes-input::placeholder {
+  color: var(--charcoal-400);
+}
+
+.notes-input:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .notes-input:focus {
@@ -1117,7 +1137,7 @@
   align-items: flex-start;
   gap: 10px;
   background: var(--amber-50);
-  border: 1px solid var(--amber-200);
+  border: 1px solid var(--amber-500);
   border-radius: var(--radius-sm);
   padding: 10px 12px;
   font-size: 12px;
