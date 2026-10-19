@@ -15,6 +15,7 @@ import { AllExpenses } from "./pages/expenses/AllExpenses";
 import { Friends } from "./pages/friends/Friends";
 import { Analytics } from "./pages/analytics/Analytics";
 import { Settings } from "./pages/settings/Settings";
+import Home from "./pages/Home";
 import "./App.css";
 
 function App() {
@@ -23,8 +24,9 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
         <Routes>
-          {/* Public Auth Routes (Redirects to /dashboard if already logged in) */}
+          {/* Public Routes (Redirects to /dashboard if already logged in) */}
           <Route element={<PublicRoute />}>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
@@ -47,8 +49,7 @@ function App() {
             </Route>
           </Route>
 
-          {/* Root and Unknown Path Fallbacks */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          {/* Unknown Path Fallback */}
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </AuthProvider>

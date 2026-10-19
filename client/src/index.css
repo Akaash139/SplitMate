@@ -217,6 +217,63 @@ select option {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* Dashboard Page Title Text Animations */
+.welcome-title,
+.all-expenses-title,
+.settlements-title,
+.groups-page-title,
+.group-hero-title,
+.friends-title,
+.analytics-title,
+.settings-title {
+  animation: pageTitleEntrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+  transition: text-shadow 0.25s ease;
+}
+
+.welcome-title:hover,
+.all-expenses-title:hover,
+.settlements-title:hover,
+.groups-page-title:hover,
+.group-hero-title:hover,
+.friends-title:hover,
+.analytics-title:hover,
+.settings-title:hover {
+  text-shadow: 0 0 16px rgba(20, 184, 166, 0.3);
+}
+
+@keyframes pageTitleEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: drop-shadow(0 2px 10px rgba(13, 148, 136, 0.35));
+  }
+  60% {
+    opacity: 0.92;
+    filter: drop-shadow(0 1px 4px rgba(13, 148, 136, 0.15));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-title,
+  .all-expenses-title,
+  .settlements-title,
+  .groups-page-title,
+  .group-hero-title,
+  .friends-title,
+  .analytics-title,
+  .settings-title {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
 /* Global Shared Modal Framework */
 .modal-backdrop {
   position: fixed;
