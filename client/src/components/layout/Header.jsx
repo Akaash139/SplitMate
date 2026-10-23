@@ -100,6 +100,8 @@ export function Header({ onMenuClick }) {
           aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           onClick={toggleTheme}
+          id="header-theme-toggle-btn"
+          data-testid="header-theme-toggle-btn"
         >
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
