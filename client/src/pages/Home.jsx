@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/useTheme';
 import AnimatedPhone from '../components/home/AnimatedPhone';
 import ProductPreview from '../components/home/ProductPreview';
 import Reveal from '../components/home/Reveal';
@@ -37,11 +39,13 @@ const PREVIEW_POINTS = [
 ];
 
 export function Home() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="sm-home">
       <a className="sm-skip" href="#main">Skip to content</a>
 
-      {/* Replace with your existing navbar if you already have one */}
+      {/* Header with Navigation and Theme Toggle */}
       <header className="sm-header">
         <div className="sm-container sm-header__inner">
           <Link className="sm-brand" to="/" aria-label="SplitMate home">
@@ -53,6 +57,25 @@ export function Home() {
             <a href="#how-it-works">How it works</a>
             <a href="#preview">Preview</a>
           </nav>
+
+          <div className="sm-header__actions">
+            {/* Dark Mode Theme Toggle */}
+            <button
+              type="button"
+              className="sm-theme-toggle"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              id="home-theme-toggle"
+              data-testid="home-theme-toggle"
+            >
+              {theme === 'dark' ? (
+                <Sun size={18} className="sm-theme-icon sm-theme-icon--sun" />
+              ) : (
+                <Moon size={18} className="sm-theme-icon sm-theme-icon--moon" />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -154,7 +177,68 @@ export function Home() {
             <ProductPreview />
           </div>
         </section>
+
+        {/* ───────── Call To Action ───────── */}
+        <section className="sm-cta">
+          <div className="sm-container">
+            <Reveal className="sm-cta__box">
+              <h2>Ready to simplify group expenses?</h2>
+              <p>Join friends, roommates, and travel groups splitting bills effortlessly.</p>
+              <div className="sm-hero__cta" style={{ justifyContent: 'center' }}>
+                <Link className="sm-btn sm-btn--light" to={ROUTES.register}>
+                  Get Started Free <ArrowRightIcon size={18} />
+                </Link>
+                <Link className="sm-btn sm-btn--secondary" to={ROUTES.login} style={{ color: 'inherit' }}>
+                  Log In
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </section>
       </main>
+
+      {/* ───────── Footer ───────── */}
+      <footer className="sm-footer">
+        <div className="sm-container sm-footer__inner">
+          <div className="sm-footer__brand-col">
+            <Link className="sm-brand" to="/" aria-label="SplitMate home">
+              <LogoMark size={28} />
+              SplitMate
+            </Link>
+            <p className="sm-footer__tagline">Group expenses, split smarter and settled with ease.</p>
+          </div>
+
+          <div className="sm-footer__right">
+            <div className="sm-footer__theme-pill">
+              <span className="sm-footer__theme-label">Theme:</span>
+              <button
+                type="button"
+                className="sm-footer__theme-toggle"
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                id="footer-theme-toggle"
+                data-testid="footer-theme-toggle"
+              >
+                {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+                <span>{theme === 'dark' ? 'Dark mode' : 'Light mode'}</span>
+              </button>
+            </div>
+
+            <nav className="sm-footer__links" aria-label="Footer navigation">
+              <a href="#features">Features</a>
+              <a href="#how-it-works">How it works</a>
+              <a href="#preview">Preview</a>
+              <Link to={ROUTES.login}>Log In</Link>
+              <Link to={ROUTES.register}>Register</Link>
+            </nav>
+          </div>
+
+          <div className="sm-footer__fine">
+            <span>© {new Date().getFullYear()} SplitMate. Split smarter, spend wiser.</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

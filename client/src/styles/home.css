@@ -136,9 +136,9 @@
 .sm-btn--sm { min-height: 40px; padding: 0 18px; font-size: 0.9rem; }
 
 /* ---------- 4. Header ---------- */
-.sm-header { position: sticky; top: 0; z-index: 20; background: var(--sm-bg); border-bottom: 1px solid var(--sm-border); }
+.sm-header { position: sticky; top: 0; z-index: 20; background: var(--sm-bg); border-bottom: 1px solid var(--sm-border); transition: background-color 0.2s ease, border-color 0.2s ease; }
 .sm-header__inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-.sm-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+.sm-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; color: var(--sm-text); text-decoration: none; }
 .sm-logo-mark {
   display: inline-flex;
   align-items: center;
@@ -161,6 +161,7 @@
   border-color: rgba(45, 212, 191, 0.3);
 }
 .sm-nav { display: none; gap: 32px; font-weight: 500; color: var(--sm-muted); }
+.sm-nav a { text-decoration: none; color: inherit; transition: color 0.2s ease; }
 .sm-nav a:hover { color: var(--sm-primary); }
 @media (min-width: 640px) {
   .sm-nav {
@@ -169,6 +170,67 @@
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+/* Header Actions & Theme Toggle */
+.sm-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.sm-theme-toggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--sm-surface);
+  border: 1px solid var(--sm-border);
+  color: var(--sm-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--sm-shadow-sm);
+}
+
+.sm-theme-toggle:hover {
+  color: var(--sm-primary);
+  border-color: var(--sm-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.18);
+}
+
+.sm-theme-toggle:active {
+  transform: translateY(1px) scale(0.95);
+}
+
+.sm-theme-icon {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+}
+
+.sm-theme-toggle:hover .sm-theme-icon--sun {
+  transform: rotate(45deg) scale(1.1);
+}
+
+.sm-theme-toggle:hover .sm-theme-icon--moon {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+[data-theme='dark'] .sm-theme-toggle {
+  background: var(--sm-surface);
+  border-color: var(--sm-border);
+  color: #f59e0b;
+}
+
+[data-theme='dark'] .sm-theme-toggle:hover {
+  background: var(--sm-surface-2);
+  border-color: #f59e0b;
+  color: #fbbf24;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
 }
 
 /* ---------- 5. Hero ---------- */
@@ -186,6 +248,23 @@
 .sm-hero__title {
   margin-top: 20px; font-size: clamp(2.2rem, 6.4vw, 4.1rem);
   line-height: 1.05; letter-spacing: -0.035em; font-weight: 800;
+}
+
+.sm-accent-text {
+  color: var(--sm-primary);
+  background: linear-gradient(135deg, var(--sm-primary) 0%, var(--sm-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sm-kicker {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sm-primary);
+  margin-bottom: 8px;
 }
 .sm-hero__lead {
   margin-top: 22px;
@@ -492,12 +571,78 @@
 .sm-cta__box h2 { font-size: clamp(1.8rem, 4.4vw, 2.8rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
 .sm-cta__box p { max-width: 32em; margin: 14px auto 28px; opacity: 0.92; }
 
-.sm-footer { padding: 40px 0; background: var(--sm-bg); border-top: 1px solid var(--sm-border); }
-.sm-footer__inner { display: grid; gap: 24px; }
-@media (min-width: 768px) { .sm-footer__inner { grid-template-columns: 1fr auto; align-items: center; } }
+.sm-footer { padding: 48px 0 36px; background: var(--sm-bg); border-top: 1px solid var(--sm-border); transition: background-color 0.2s ease, border-color 0.2s ease; }
+.sm-footer__inner { display: grid; gap: 28px; }
+@media (min-width: 768px) {
+  .sm-footer__inner { grid-template-columns: 1fr auto; align-items: flex-start; }
+}
+.sm-footer__brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sm-footer__tagline {
+  font-size: 0.9rem;
+  color: var(--sm-muted);
+  max-width: 320px;
+  line-height: 1.45;
+}
+.sm-footer__right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+@media (min-width: 768px) {
+  .sm-footer__right {
+    align-items: flex-end;
+  }
+}
+.sm-footer__theme-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px 4px 12px;
+  background: var(--sm-surface-2);
+  border: 1px solid var(--sm-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+}
+.sm-footer__theme-label {
+  color: var(--sm-muted);
+  font-weight: 500;
+}
+.sm-footer__theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--sm-surface);
+  border: 1px solid var(--sm-border);
+  color: var(--sm-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--sm-shadow-sm);
+}
+.sm-footer__theme-toggle:hover {
+  color: var(--sm-primary);
+  border-color: var(--sm-primary);
+  transform: translateY(-1px);
+}
+[data-theme='dark'] .sm-footer__theme-toggle {
+  color: #fbbf24;
+}
+[data-theme='dark'] .sm-footer__theme-toggle:hover {
+  background: var(--sm-surface-2);
+  border-color: #f59e0b;
+}
 .sm-footer__links { display: flex; flex-wrap: wrap; gap: 20px; font-weight: 500; color: var(--sm-muted); }
+.sm-footer__links a { text-decoration: none; color: inherit; transition: color 0.15s ease; }
 .sm-footer__links a:hover { color: var(--sm-primary); }
-.sm-footer__fine { grid-column: 1 / -1; padding-top: 20px; font-size: 0.82rem; color: var(--sm-muted); border-top: 1px solid var(--sm-border); }
+.sm-footer__fine { grid-column: 1 / -1; padding-top: 24px; font-size: 0.82rem; color: var(--sm-muted); border-top: 1px solid var(--sm-border); }
 
 /* ---------- 11. Scroll reveal ---------- */
 .sm-reveal {

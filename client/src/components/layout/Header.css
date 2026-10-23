@@ -115,11 +115,25 @@
 
 .theme-toggle-btn {
   color: var(--charcoal-600);
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
 }
 
 .theme-toggle-btn:hover {
   color: var(--teal-600);
   border-color: var(--teal-500);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn:hover svg {
+  transform: rotate(15deg) scale(1.08);
+}
+
+.theme-toggle-btn:active {
+  transform: translateY(1px) scale(0.96);
 }
 
 [data-theme="dark"] .theme-toggle-btn {
@@ -131,6 +145,11 @@
   background-color: var(--charcoal-100);
   color: #fbbf24;
   border-color: #f59e0b;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+}
+
+[data-theme="dark"] .theme-toggle-btn:hover svg {
+  transform: rotate(45deg) scale(1.1);
 }
 
 /* Header Install Button */
