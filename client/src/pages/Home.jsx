@@ -177,24 +177,6 @@ export function Home() {
             <ProductPreview />
           </div>
         </section>
-
-        {/* ───────── Call To Action ───────── */}
-        <section className="sm-cta">
-          <div className="sm-container">
-            <Reveal className="sm-cta__box">
-              <h2>Ready to simplify group expenses?</h2>
-              <p>Join friends, roommates, and travel groups splitting bills effortlessly.</p>
-              <div className="sm-hero__cta" style={{ justifyContent: 'center' }}>
-                <Link className="sm-btn sm-btn--light" to={ROUTES.register}>
-                  Get Started Free <ArrowRightIcon size={18} />
-                </Link>
-                <Link className="sm-btn sm-btn--secondary" to={ROUTES.login} style={{ color: 'inherit' }}>
-                  Log In
-                </Link>
-              </div>
-            </Reveal>
-          </div>
-        </section>
       </main>
 
       {/* ───────── Footer ───────── */}
